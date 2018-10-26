@@ -6,6 +6,8 @@ package com.integrate.mingweidev;
  */
 public class qqq {
 
-    void d(){}
+    void d(){
+        System.out.println("3");
+    }
 }
 
