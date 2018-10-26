@@ -5,4 +5,7 @@ package com.integrate.mingweidev;
  * Copyright © 2018年 CETC. All rights reserved.
  */
 public class qqq {
+
+    void d(){}
 }
+
