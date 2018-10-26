@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 public class MainActivity extends AppCompatActivity {
 
+    int a = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
