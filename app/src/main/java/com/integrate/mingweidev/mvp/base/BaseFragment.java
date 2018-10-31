@@ -131,6 +131,9 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
      */
     protected abstract void initView();
 
+    public void initListener() {
+    }
+
     /**
      * 吐司
      *
@@ -169,9 +172,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         if (getActivity() != null) {
             getActivity().finish();
         }
-    }
-
-    public void initListener() {
     }
 
     public void onBackListener() {
