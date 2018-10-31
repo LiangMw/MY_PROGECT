@@ -14,6 +14,7 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.widget.TextView;
 
+import com.integrate.mingweidev.MYApplication;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.utils.DimenUtils;
 import com.integrate.mingweidev.utils.SharedPreUtils;
@@ -34,6 +35,7 @@ public class MainBaseActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        MYApplication.addActivity(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
         }

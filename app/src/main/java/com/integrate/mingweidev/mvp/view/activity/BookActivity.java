@@ -31,7 +31,6 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
                 mPresenter.pBook();
             }
         });
-
     }
 
     @Override

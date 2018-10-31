@@ -5,6 +5,8 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.integrate.mingweidev.MYApplication;
+
 import butterknife.ButterKnife;
 
 /**
@@ -19,6 +21,7 @@ public abstract class BaseActivity<T extends BasePresenter> extends AppCompatAct
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);//子类的super.OnCreate必须在setContentView后调用
         mContext = this;
+        MYApplication.addActivity(this);
         if (setContentViewId() != 0) {
             setContentView(setContentViewId());
         } else {

@@ -10,6 +10,8 @@ import com.integrate.mingweidev.mvp.base.BaseActivity;
 import com.integrate.mingweidev.mvp.base.BaseFragmentActivity;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
 
+import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
+
 /**
  * Created by 梁明伟 on 2018/10/23.
  * Copyright © 2018年 CETC. All rights reserved.
@@ -51,7 +53,7 @@ public class AppMethod {
     public static void postShowFromReceiver(Context cxt, FragmentPages page,
                                             Bundle data) {
         Intent intent = new Intent(cxt, BaseFragmentActivity.class);
-        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TOP);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | FLAG_ACTIVITY_CLEAR_TOP);
         intent.putExtra(Constant.CONTENT_KEY, page.getValue());
         intent.putExtra(Constant.DATA_KEY, data);
         cxt.startActivity(intent);

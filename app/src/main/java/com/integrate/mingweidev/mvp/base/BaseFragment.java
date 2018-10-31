@@ -133,11 +133,15 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         this.mActionBarRes = mActionBarRes;
     }
 
-    private void changeStyle() {
+    public void changeStyle() {
         setTitle(mActionBarRes.mTitle);
         setBackIcon(mActionBarRes.leftPic);
         setRightIcon(mActionBarRes.rightPic);
         setRightVisible(mActionBarRes.rightVisible);
+        if(subActivity != null) {
+            subActivity.initThemeToolBar("789");
+
+        }
     }
 
     public void setTitle(String title) {

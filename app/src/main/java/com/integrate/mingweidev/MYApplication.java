@@ -1,10 +1,15 @@
 package com.integrate.mingweidev;
 
+import android.app.Activity;
 import android.app.Application;
 import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+
+import com.integrate.mingweidev.utils.LogUtils;
+
+import java.util.ArrayList;
 
 
 /**
@@ -12,23 +17,41 @@ import android.content.res.Resources;
  */
 
 public class MYApplication extends Application {
+    public static PackageInfo packageInfo;
+    private static ArrayList<Activity> allActivity = new ArrayList<>();
     private static MYApplication app;
 
-    public static Context  getAppContext() {
+    public static Context getAppContext() {
         return app;
     }
 
     public static Resources getAppResources() {
         return app.getResources();
     }
-    public static PackageInfo packageInfo;
+
+    /**
+     * 添加activity同意管理
+     *
+     * @param activity
+     */
+    public static void addActivity(Activity activity) {
+        LogUtils.e("---------add:"+activity);
+        if(!allActivity.contains(activity)) {
+            allActivity.add(activity);
+        }
+    }
+
+    public static void removeAllActivity() {
+        for (Activity a : allActivity) {
+            a.finish();
+        }
+    }
 
     @Override
     protected void attachBaseContext(Context base) {
         super.attachBaseContext(base);
 //        MultiDex.install(this);
     }
-
 
     @Override
     public void onCreate() {
@@ -66,10 +89,10 @@ public class MYApplication extends Application {
 //                .setReloadButtonWidthAndHeight(150, 40);
 //    }
 
-   /* private void initRxHttpUtils() {
-        *//**
-         * 初始化配置
-         *//*
+    /* private void initRxHttpUtils() {
+     *//**
+     * 初始化配置
+     *//*
         RxHttpUtils.init(this);
         OkHttpClient.Builder client = new OkHttpClient().newBuilder()
                 .connectTimeout(20, TimeUnit.SECONDS)

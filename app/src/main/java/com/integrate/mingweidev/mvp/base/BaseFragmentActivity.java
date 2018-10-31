@@ -15,6 +15,7 @@ import android.view.WindowManager;
 import android.widget.FrameLayout;
 import android.widget.TextView;
 
+import com.integrate.mingweidev.MYApplication;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
 import com.integrate.mingweidev.utils.Constant;
@@ -54,6 +55,8 @@ public class BaseFragmentActivity extends AppCompatActivity {
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        onPreCreate();
+        MYApplication.addActivity(this);
         setContentView(R.layout.activity_sub);
         ButterKnife.bind(this);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
@@ -73,7 +76,6 @@ public class BaseFragmentActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
         }
-        initThemeToolBar("");
     }
 
     @Override
@@ -136,7 +138,7 @@ public class BaseFragmentActivity extends AppCompatActivity {
     }
 
     public void initStatusBar() {
-        statusBar = findViewById(R.id.status_bar);
+        ColorView statusBar = findViewById(R.id.status_bar);
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             statusBar.setVisibility(View.VISIBLE);
             statusBar.getLayoutParams().height = SystemUtils.getStatusHeight(this);

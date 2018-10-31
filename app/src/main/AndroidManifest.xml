@@ -21,7 +21,7 @@
 
         <provider
             android:name=".utils.RongFileProvider"
-            android:authorities="com.mingwei.helper.FileProvider"
+            android:authorities="com.integrate.mingweidev.FileProvider"
             android:exported="false"
             android:grantUriPermissions="true"
             tools:replace="name,authorities,exported,grantUriPermissions">
