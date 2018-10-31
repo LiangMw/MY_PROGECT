@@ -22,10 +22,9 @@ import butterknife.ButterKnife;
 
 public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
-    protected Context mContext;
     public View mRootView;
     public T mPresenter;
-
+    protected Context mContext;
     private ActionBarRes mActionBarRes = new ActionBarRes();
     private BaseFragmentActivity subActivity;
 
@@ -38,8 +37,8 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     public void onAttach(Context context) {
         super.onAttach(context);
         this.mContext = context;
-        if(getActivity() instanceof BaseFragmentActivity) {
-            subActivity  = (BaseFragmentActivity) getActivity();
+        if (getActivity() instanceof BaseFragmentActivity) {
+            subActivity = (BaseFragmentActivity) getActivity();
         }
     }
 
@@ -71,17 +70,66 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         changeStyle();
     }
 
+    @Override
+    public void onDestroy() {
+        super.onDestroy();
+        if (mPresenter != null) {
+            mPresenter.onDestroy();//页面销毁网络请求也取消
+        }
+    }
+
+    public void setTitleBar(ActionBarRes mActionBarRes) {
+        this.mActionBarRes = mActionBarRes;
+    }
+
+    public void changeStyle() {
+        setTitle(mActionBarRes.mTitle);
+        setBackIcon(mActionBarRes.leftPic);
+        setRightIcon(mActionBarRes.rightPic);
+        setRightVisible(mActionBarRes.rightVisible);
+    }
+
+    public void setTitle(String title) {
+        if (subActivity != null) {
+            subActivity.setTitle(title);
+        }
+    }
+
+    public void setBackIcon(int icon) {
+        if (subActivity != null) {
+            subActivity.setBackicon(icon);
+        }
+    }
+
+    public void setRightIcon(int icon) {
+        if (subActivity != null) {
+            subActivity.setRighticon(icon);
+
+        }
+    }
+
+    public void setRightVisible(boolean visible) {
+        if (subActivity != null) {
+            subActivity.setRightVisable(visible);
+        }
+    }
+
+    /**
+     * 传入布局文件
+     *
+     * @return
+     */
+    public abstract int getLayoutRes();
+
     /**
      * 创建presenter实例
      */
     public abstract void createPresenter();
 
-
     /**
      * 初始化
      */
     protected abstract void initView();
-
 
     /**
      * 吐司
@@ -112,61 +160,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         Intent intent = new Intent(mContext, className);
         intent.putExtras(bundle);
         startActivity(intent);
-    }
-
-    /**
-     * 传入布局文件
-     *
-     * @return
-     */
-    public abstract int getLayoutRes();
-
-    @Override
-    public void onDestroy() {
-        super.onDestroy();
-        if (mPresenter != null) {
-            mPresenter.onDestroy();//页面销毁网络请求也取消
-        }
-    }
-
-    public void setTitleBar(ActionBarRes mActionBarRes) {
-        this.mActionBarRes = mActionBarRes;
-    }
-
-    public void changeStyle() {
-        setTitle(mActionBarRes.mTitle);
-        setBackIcon(mActionBarRes.leftPic);
-        setRightIcon(mActionBarRes.rightPic);
-        setRightVisible(mActionBarRes.rightVisible);
-        if(subActivity != null) {
-            subActivity.initThemeToolBar("789");
-
-        }
-    }
-
-    public void setTitle(String title) {
-        if (subActivity != null) {
-            subActivity.setTitle(title);
-        }
-    }
-
-    public void setRightVisible(boolean visible) {
-        if (subActivity != null) {
-            subActivity.setRightVisable(visible);
-        }
-    }
-
-    public void setBackIcon(int icon) {
-        if (subActivity != null) {
-            subActivity.setBackicon(icon);
-        }
-    }
-
-    public void setRightIcon(int icon) {
-        if (subActivity != null) {
-            subActivity.setRighticon(icon);
-
-        }
     }
 
     /**

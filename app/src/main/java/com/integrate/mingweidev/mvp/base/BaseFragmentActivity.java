@@ -37,6 +37,7 @@ import butterknife.OnClick;
  */
 public class BaseFragmentActivity extends AppCompatActivity {
 
+    public BaseFragment currFragment;
     @BindView(R.id.status_bar)
     ColorView statusBar;
     @BindView(R.id.iv_toolbar_back)
@@ -49,8 +50,6 @@ public class BaseFragmentActivity extends AppCompatActivity {
     ColorRelativeLayout crl;
     @BindView(R.id.container)
     FrameLayout container;
-
-    public BaseFragment currFragment;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -79,13 +78,60 @@ public class BaseFragmentActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
+    }
+
+    public void onPreCreate() {
+        Theme theme = SharedPreUtils.getInstance().getCurrentTheme();
+        switch (theme) {
+            case Blue:
+                setTheme(R.style.BlueTheme);
+                break;
+            case Red:
+                setTheme(R.style.RedTheme);
+                break;
+            case Brown:
+                setTheme(R.style.BrownTheme);
+                break;
+            case Green:
+                setTheme(R.style.GreenTheme);
+                break;
+            case Purple:
+                setTheme(R.style.PurpleTheme);
+                break;
+            case Teal:
+                setTheme(R.style.TealTheme);
+                break;
+            case Pink:
+                setTheme(R.style.PinkTheme);
+                break;
+            case DeepPurple:
+                setTheme(R.style.DeepPurpleTheme);
+                break;
+            case Orange:
+                setTheme(R.style.OrangeTheme);
+                break;
+            case Indigo:
+                setTheme(R.style.IndigoTheme);
+                break;
+            case LightGreen:
+                setTheme(R.style.LightGreenTheme);
+                break;
+            case Lime:
+                setTheme(R.style.LimeTheme);
+                break;
+            case DeepOrange:
+                setTheme(R.style.DeepOrangeTheme);
+                break;
+            case Cyan:
+                setTheme(R.style.CyanTheme);
+                break;
+            case BlueGrey:
+                setTheme(R.style.BlueGreyTheme);
+                break;
+        }
+
     }
 
     @TargetApi(19)
@@ -146,58 +192,6 @@ public class BaseFragmentActivity extends AppCompatActivity {
         } else {
             statusBar.setVisibility(View.GONE);
         }
-    }
-
-    public void onPreCreate() {
-        Theme theme = SharedPreUtils.getInstance().getCurrentTheme();
-        switch (theme) {
-            case Blue:
-                setTheme(R.style.BlueTheme);
-                break;
-            case Red:
-                setTheme(R.style.RedTheme);
-                break;
-            case Brown:
-                setTheme(R.style.BrownTheme);
-                break;
-            case Green:
-                setTheme(R.style.GreenTheme);
-                break;
-            case Purple:
-                setTheme(R.style.PurpleTheme);
-                break;
-            case Teal:
-                setTheme(R.style.TealTheme);
-                break;
-            case Pink:
-                setTheme(R.style.PinkTheme);
-                break;
-            case DeepPurple:
-                setTheme(R.style.DeepPurpleTheme);
-                break;
-            case Orange:
-                setTheme(R.style.OrangeTheme);
-                break;
-            case Indigo:
-                setTheme(R.style.IndigoTheme);
-                break;
-            case LightGreen:
-                setTheme(R.style.LightGreenTheme);
-                break;
-            case Lime:
-                setTheme(R.style.LimeTheme);
-                break;
-            case DeepOrange:
-                setTheme(R.style.DeepOrangeTheme);
-                break;
-            case Cyan:
-                setTheme(R.style.CyanTheme);
-                break;
-            case BlueGrey:
-                setTheme(R.style.BlueGreyTheme);
-                break;
-        }
-
     }
 
     /**
@@ -313,5 +307,10 @@ public class BaseFragmentActivity extends AppCompatActivity {
         } else {
             super.onBackPressed();
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
     }
 }

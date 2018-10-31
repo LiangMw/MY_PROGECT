@@ -66,8 +66,6 @@ public class MyFragment extends BaseFragment {
     public void setTitleBar(ActionBarRes mActionBarRes) {
         super.setTitleBar(mActionBarRes);
         mActionBarRes.mTitle = "新标题";
-        mActionBarRes.rightVisible =true;
-        mActionBarRes.rightPic = R.drawable.ic_city;
     }
 
     @Override

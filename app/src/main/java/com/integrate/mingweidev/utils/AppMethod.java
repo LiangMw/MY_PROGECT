@@ -61,7 +61,6 @@ public class AppMethod {
 
     /**
      * activity跳转到SimpleBackActivity时，只能使用该方法跳转(带回调的启动)
-     *
      * @param code 启动码
      * @param page 要显示的Fragment
      * @param data 传递的Bundle数据
