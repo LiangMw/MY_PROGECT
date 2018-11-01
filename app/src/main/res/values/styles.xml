@@ -322,4 +322,12 @@
         <item name="android:textColor">?attr/colorPrimary</item>
     </style>
 
+    <style name="PermissionBlueStyle">
+        <item name="PermissionTitleColor">@color/colorPrimaryDark</item>
+        <item name="PermissionMsgColor">@color/colorPrimary</item>
+        <item name="PermissionItemTextColor">@color/colorPrimary</item>
+        <item name="PermissionButtonBackground">@drawable/shape_btn_next</item>
+        <item name="PermissionBackround">@drawable/shape_bg_white</item>
+        <item name="PermissionButtonTextColor">@android:color/white</item>
+    </style>
 </resources>

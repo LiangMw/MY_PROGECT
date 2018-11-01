@@ -6,9 +6,11 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 
-import com.integrate.mingweidev.mvp.base.BaseActivity;
 import com.integrate.mingweidev.mvp.base.BaseFragmentActivity;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
+
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
 
 import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
 
@@ -89,9 +91,46 @@ public class AppMethod {
     public static void postShowForResult(Fragment fragment, int code,
                                          FragmentPages page, Bundle data) {
         Intent intent = new Intent(fragment.getActivity(),
-                BaseActivity.class);
+                BaseFragmentActivity.class);
         intent.putExtra(Constant.CONTENT_KEY, page.getValue());
         intent.putExtra(Constant.DATA_KEY, data);
         fragment.startActivityForResult(intent, code);
+    }
+
+    public void getPermissions(Activity activity){
+
+        HiPermission.create(activity)
+                .checkMutiPermission(new PermissionCallback() {
+                    @Override
+                    public void onClose() {
+//                        showToast("用户关闭权限申请");
+                        SnackBarUtils.makeShort(activity.getWindow().getDecorView(), "读写权限被禁止,移步到应用管理允许权限");
+                    }
+
+                    @Override
+                    public void onFinish() {
+//                        showToast("所有权限申请完成");
+                    }
+
+                    @Override
+                    public void onDeny(String permisson, int position) {
+                    }
+
+                    @Override
+                    public void onGuarantee(String permisson, int position) {
+                    }
+                });
+
+    }
+
+    public static void getPermission(Activity activity){
+
+//        List<PermissonItem> permissonItems = new ArrayList<PermissonItem>();
+//        permissonItems.add(new PermissonItem(Manifest.permission.CAMERA, "照相机", R.drawable.permission_ic_memory));
+//        permissonItems.add(new PermissonItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
+//        HiPermission.create(activity)
+//                .permissions(permissonItems)
+//                .checkMutiPermission(...);
+
     }
 }

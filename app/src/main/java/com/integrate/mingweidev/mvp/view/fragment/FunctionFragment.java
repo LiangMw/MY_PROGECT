@@ -1,6 +1,9 @@
 package com.integrate.mingweidev.mvp.view.fragment;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
@@ -10,10 +13,16 @@ import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.view.activity.BookActivity;
 import com.integrate.mingweidev.mvp.view.adapter.FunctionAdapter;
 import com.integrate.mingweidev.utils.AppMethod;
+import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.LogUtils;
+import com.integrate.mingweidev.utils.SnackBarUtils;
+import com.integrate.mingweidev.utils.ThemeUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
 
 import butterknife.BindView;
 import butterknife.Unbinder;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
 
 /**
  * Created by 梁明伟 on 2017/11/28.
@@ -26,9 +35,10 @@ public class FunctionFragment extends BaseFragment {
     GridView gvView;
     Unbinder unbinder;
 
-    private int[] icons = new int[]{R.mipmap.f_files,R.mipmap.f_music,R.drawable.f_photo};
-    private String[] names = new String[]{"文件","音乐","图片"};
+    private int[] icons = new int[]{R.mipmap.f_files, R.mipmap.f_music, R.drawable.f_photo};
+    private String[] names = new String[]{"文件", "音乐", "图片"};
     private FunctionAdapter adapter;
+    private int CHOOSEFILE_CODE = 10001;
 
     public static FunctionFragment newInstance() {
         FunctionFragment fragment = new FunctionFragment();
@@ -42,6 +52,16 @@ public class FunctionFragment extends BaseFragment {
     }
 
     /**
+     * 传入布局文件
+     *
+     * @return
+     */
+    @Override
+    public int getLayoutRes() {
+        return R.layout.fragment_function;
+    }
+
+    /**
      * 创建presenter实例
      */
     @Override
@@ -51,74 +71,72 @@ public class FunctionFragment extends BaseFragment {
 
     @Override
     public void initView() {
-        if(adapter == null) {
-            adapter = new FunctionAdapter(getActivity(),icons,names);
+        if (adapter == null) {
+            adapter = new FunctionAdapter(getActivity(), icons, names);
             gvView.setAdapter(adapter);
-        }else {
-            adapter.setData(icons,names);
+        } else {
+            adapter.setData(icons, names);
         }
-
         gvView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
-
                 switch (i) {
-                    case  0:
-                        ToastUtils.show(names[i]);
-                        AppMethod.postShow(getActivity(),FragmentPages.WINDCAR_IDENTITYCHOICE);
-//                        Intent intent = new Intent(getActivity(), BaseFragmentActivity.class);
-////                    intent.putExtra(Constant.CONTENT_KEY, page.getValue());
-////                    intent.putExtra(Constant.DATA_KEY, data);
-//                        startActivity(intent);
-                       /* RxPermissions rxPermissions = new RxPermissions(getActivity());
-                        rxPermissions
-                                .requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                        Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                                .subscribe(permission -> {
-                                    if (permission.granted) {
-                                        // 用户已经同意该权限.
-                                        AppMethod.postShow((Activity) mContext,FragmentPages.WINDCAR_IDENTITYCHOIC);
+                    case 0:
+                        if (!HiPermission.checkPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                            HiPermission.create(getActivity())
+                                    .title("请允许以下权限")
+                                    .msg("为了收复钓鱼岛")
+                                    .style(R.style.AppTheme)
+                                    .filterColor(ThemeUtils.getThemeColor())
+                                    .animStyle(R.anim.popup_enter)
+                                    .checkSinglePermission(Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionCallback() {
+                                        @Override
+                                        public void onClose() {
+                                            SnackBarUtils.makeShort(getActivity().getWindow().getDecorView(), "读写权限被禁止");
+                                        }
 
-//                                        Intent intent = new Intent(getActivity(), BasesActivity.class);
-//                                        intent.putExtra(Constant.CONTENT_KEY, FragmentPages.getPageByValue(1001));
-//                                        getActivity().startActivity(intent);
+                                        @Override
+                                        public void onFinish() {
 
-                                    } else if (permission.shouldShowRequestPermissionRationale) {
-                                        // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                                        ToastUtils.show("用户拒绝开启读写权限");
-                                    } else {
-                                        // 用户拒绝了该权限，并且选中『不再询问』
-//                                        mResideLayout.closePane();
-                                        SnackBarUtils.makeShort(getActivity().getWindow().getDecorView(), "读写权限被禁止,移步到应用管理允许权限").show("去设置", new View.OnClickListener() {
-                                            @Override
-                                            public void onClick(View v) {
-                                                BaseUtils.getAppDetailSettingIntent(mContext, getActivity().getPackageName());
-                                            }
-                                        });
-                                    }
-                                });*/
+                                        }
 
+                                        @Override
+                                        public void onDeny(String permission, int position) {
+
+                                        }
+
+                                        @Override
+                                        public void onGuarantee(String permission, int position) {
+                                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                                        }
+                                    });
+                        } else {
+                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                        }
                         break;
-
                     case 1:
                         startActivity(BookActivity.class);
                         ToastUtils.show(names[i]);
                         break;
+                    case 2:
+                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                        break;
                 }
-                ToastUtils.show(names[i]);
             }
         });
 
     }
 
-    /**
-     * 传入布局文件
-     *
-     * @return
-     */
     @Override
-    public int getLayoutRes() {
-        return R.layout.fragment_function;
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHOOSEFILE_CODE) {
+            if (data != null) {
+                String dat = data.getStringExtra(Constant.TAG_FILERESULT);
+                LogUtils.e("----------dat:" + dat);
+            }
+
+        }
     }
 
     @Override

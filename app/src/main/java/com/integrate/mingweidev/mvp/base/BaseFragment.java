@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.integrate.mingweidev.R;
+import com.integrate.mingweidev.utils.SnackBarUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
 
 import butterknife.ButterKnife;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
 
 
 /**
@@ -61,7 +64,6 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
 
         return mRootView;
     }
-
 
     @Override
     public void onResume() {
@@ -163,6 +165,32 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
         Intent intent = new Intent(mContext, className);
         intent.putExtras(bundle);
         startActivity(intent);
+    }
+
+    public void getPermission(){
+
+        HiPermission.create(mContext)
+                .checkMutiPermission(new PermissionCallback() {
+                    @Override
+                    public void onClose() {
+                        showToast("用户关闭权限申请");
+                        SnackBarUtils.makeShort(subActivity.getWindow().getDecorView(), "读写权限被禁止,移步到应用管理允许权限");
+                    }
+
+                    @Override
+                    public void onFinish() {
+                        showToast("所有权限申请完成");
+                    }
+
+                    @Override
+                    public void onDeny(String permisson, int position) {
+                    }
+
+                    @Override
+                    public void onGuarantee(String permisson, int position) {
+                    }
+                });
+
     }
 
     /**

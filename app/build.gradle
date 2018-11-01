@@ -79,4 +79,10 @@ dependencies {
      */
     implementation "com.squareup.okhttp3:okhttp:3.4.1"
     implementation "com.squareup.okhttp3:logging-interceptor:3.4.0-RC1"
+
+    /**
+     *    hipermission
+     *    动态权限申请
+     */
+    implementation 'me.weyye.hipermission:library:1.0.7'
 }

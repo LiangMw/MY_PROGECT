@@ -25,4 +25,9 @@ public class Constant {
     public static String CONTENT_KEY = "mall_content_key";
     //fragment传值中的key值
     public static String DATA_KEY = "data_key";
+
+    /*****************fragment传值*******************/
+
+    //文件选择回带结果
+    public static String TAG_FILERESULT = "fragment_files";
 }

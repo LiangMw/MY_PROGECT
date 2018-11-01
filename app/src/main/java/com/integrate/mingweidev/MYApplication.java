@@ -7,8 +7,6 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 
-import com.integrate.mingweidev.utils.LogUtils;
-
 import java.util.ArrayList;
 
 
@@ -35,7 +33,6 @@ public class MYApplication extends Application {
      * @param activity
      */
     public static void addActivity(Activity activity) {
-        LogUtils.e("---------add:"+activity);
         if(!allActivity.contains(activity)) {
             allActivity.add(activity);
         }

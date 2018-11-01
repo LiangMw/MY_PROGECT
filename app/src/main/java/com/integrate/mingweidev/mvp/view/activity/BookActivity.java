@@ -56,7 +56,7 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
 
     @Override
     public void vBookSuccess(BookBean bean) {
-        mTv.setText("网络请求成功");
+        mTv.setText("网络请求成功"+bean.getFemale().get(0).getName());
     }
 
     @Override

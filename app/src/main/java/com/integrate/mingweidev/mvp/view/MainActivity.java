@@ -20,6 +20,7 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.afollestad.materialdialogs.color.ColorChooserDialog;
+import com.integrate.mingweidev.MYApplication;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.MainBaseActivity;
 import com.integrate.mingweidev.mvp.model.MainMenuBean;
@@ -76,6 +77,18 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     private long fristTime = 0;
     private FragmentManager fragmentManager;
     private String currentFragmentTag;
+    private View.OnClickListener leftlistener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+            mResideLayout.openPane();
+        }
+    };
+    private View.OnClickListener rightlistener = new View.OnClickListener() {
+        @Override
+        public void onClick(View view) {
+
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -85,6 +98,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         initMenu();
         fragmentManager = getSupportFragmentManager();
         switchFragment("功能");
+        initThemeToolBar("功能", R.drawable.ic_classify,R.drawable.ic_setting, leftlistener, rightlistener);
     }
 
     private void initMenu() {
@@ -216,7 +230,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         return menuBeans;
     }
 
-    @OnClick({R.id.iv_avatar, R.id.tv_theme, R.id.tv_setting})
+    @OnClick({R.id.iv_avatar, R.id.tv_theme, R.id.tv_setting, R.id.iv_toolbar_back})
     public void onViewClicked(View view) {
         switch (view.getId()) {
             case R.id.iv_avatar:
@@ -243,6 +257,9 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
                 } else {
                     startActivity(SettingActivity.class);
                 }*/
+                break;
+            case R.id.iv_toolbar_back:
+                mResideLayout.openPane();
                 break;
         }
     }
@@ -370,6 +387,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
                 finish();
             } else {
                 SnackBarUtils.makeShort(getWindow().getDecorView(), "再点击一次退出应用").show();
+                MYApplication.removeAllActivity();
                 fristTime = System.currentTimeMillis();
             }
         }
