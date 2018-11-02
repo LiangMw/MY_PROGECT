@@ -12,8 +12,10 @@ import retrofit2.http.GET;
 
 public interface DevMvpService {
 
-
     @GET(Url.BOOK_CLASSIFY)
     Observable<BookBean> bookClassify();
+
+    @GET(Url.BOOK_CLASSIFYFRAGMENT)
+    Observable<BookBean> bookClassifyfragment();
 
 }

@@ -9,5 +9,7 @@ public class Url {
 
     public static final String BOOK_CLASSIFY = "/cats/lv2/statistics";
 
+    public static final String BOOK_CLASSIFYFRAGMENT = "/cats/lv2/statistics";
+
 
 }

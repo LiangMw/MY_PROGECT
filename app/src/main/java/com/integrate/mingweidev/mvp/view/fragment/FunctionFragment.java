@@ -119,7 +119,7 @@ public class FunctionFragment extends BaseFragment {
                         ToastUtils.show(names[i]);
                         break;
                     case 2:
-                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
                         break;
                 }
             }
