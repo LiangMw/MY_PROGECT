@@ -384,10 +384,10 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         } else {
             long secondTime = System.currentTimeMillis();
             if (secondTime - fristTime < 2000) {
+                MYApplication.removeAllActivity();
                 finish();
             } else {
                 SnackBarUtils.makeShort(getWindow().getDecorView(), "再点击一次退出应用").show();
-                MYApplication.removeAllActivity();
                 fristTime = System.currentTimeMillis();
             }
         }

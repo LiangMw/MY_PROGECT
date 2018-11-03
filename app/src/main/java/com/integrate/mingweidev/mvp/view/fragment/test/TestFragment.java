@@ -12,6 +12,7 @@ import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.contract.CBook;
 import com.integrate.mingweidev.mvp.presenter.PFragmentTest;
+import com.integrate.mingweidev.utils.LoadingHelper;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -56,6 +57,7 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CBook.I
         btJjj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 mPresenter.pBook();
             }
         });
@@ -73,12 +75,12 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CBook.I
 
     @Override
     public void showLoading() {
-
+        LoadingHelper.getInstance().showLoading(getActivity());
     }
 
     @Override
     public void hideLoading() {
-
+        LoadingHelper.getInstance().hideLoading();
     }
 
     @Override
