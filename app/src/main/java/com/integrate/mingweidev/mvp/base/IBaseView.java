@@ -6,4 +6,5 @@ package com.integrate.mingweidev.mvp.base;
 public interface IBaseView {
     void showLoading();
     void hideLoading();
+    void neterror();
 }

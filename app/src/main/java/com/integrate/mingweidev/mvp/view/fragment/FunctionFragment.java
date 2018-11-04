@@ -20,7 +20,6 @@ import com.integrate.mingweidev.utils.ThemeUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
 
 import butterknife.BindView;
-import butterknife.Unbinder;
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;
 
@@ -33,7 +32,6 @@ public class FunctionFragment extends BaseFragment {
 
     @BindView(R.id.gv_view)
     GridView gvView;
-    Unbinder unbinder;
 
     private int[] icons = new int[]{R.mipmap.f_files, R.mipmap.f_music, R.drawable.f_photo};
     private String[] names = new String[]{"文件", "音乐", "图片"};
@@ -119,7 +117,7 @@ public class FunctionFragment extends BaseFragment {
                         ToastUtils.show(names[i]);
                         break;
                     case 2:
-                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
+                        AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);
                         break;
                 }
             }
@@ -142,6 +140,5 @@ public class FunctionFragment extends BaseFragment {
     @Override
     public void onDestroyView() {
         super.onDestroyView();
-        unbinder.unbind();
     }
 }

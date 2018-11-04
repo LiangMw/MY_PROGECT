@@ -32,7 +32,7 @@ public class PFragmentTest extends BasePresenter<CBook.IVBook,MFragmentTest> imp
 
             @Override
             public void onFail(String reason) {
-
+                mView.hideLoading();
             }
         });
 

@@ -1,11 +1,13 @@
 package com.integrate.mingweidev.api;
 
-import com.jakewharton.retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
-import java.util.concurrent.TimeUnit;
-import okhttp3.OkHttpClient;
-import okhttp3.logging.HttpLoggingInterceptor;
+import com.allen.library.RxHttpUtils;
+import com.allen.library.http.SingleRxHttp;
+import com.integrate.mingweidev.utils.SharedPreUtils;
+
+import java.util.HashMap;
+import java.util.Map;
+
 import retrofit2.Retrofit;
-import retrofit2.converter.gson.GsonConverterFactory;
 
 /**
  * Created by Liang_Lu on 2017/8/31.
@@ -20,7 +22,7 @@ public class DevMvpApi {
      *
      * @return
      */
-    public static Retrofit createApi() {
+ /*  public static Retrofit createApi() {
         OkHttpClient.Builder httpClientBuilder = new OkHttpClient.Builder().
                 connectTimeout(10, TimeUnit.SECONDS)
                 .readTimeout(10, TimeUnit.SECONDS)
@@ -35,5 +37,44 @@ public class DevMvpApi {
                 .baseUrl(Url.BASE_URL)
                 .build();
         return mRetrofit;
+
+    }*/
+
+    /**
+     * 获取token
+     *
+     * @return
+     */
+    public static Map tokenMap() {
+        Map<String, Object> map = new HashMap<>();
+        map.put("access-token", SharedPreUtils.getInstance().getString("token", "weyue"));
+        map.put("app-type", "Android");
+//        map.put("version-code", WYApplication.packageInfo.versionCode);
+        return map;
+    }
+
+    public static SingleRxHttp createApi(){
+        return RxHttpUtils.getSInstance().addHeaders(tokenMap());
+//        RxHttpUtils.getSInstance().addHeaders(tokenMap()).createSApi(BookService.class)
+//                .bookChapters(bookId)
+//                .compose(Transformer.switchSchedulers())
+//                .subscribe(new RxObserver<BookChaptersBean>() {
+//                    @Override
+//                    protected void onError(String errorMsg) {
+//
+//                    }
+//
+//                    @Override
+//                    protected void onSuccess(BookChaptersBean data) {
+//                        if (iBookChapters != null) {
+//                            iBookChapters.bookChapters(data);
+//                        }
+//                    }
+//
+//                    @Override
+//                    public void onSubscribe(Disposable d) {
+//                        addDisposadle(d);
+//                    }
+//                });
     }
 }

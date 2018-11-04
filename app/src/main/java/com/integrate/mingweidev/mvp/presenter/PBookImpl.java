@@ -3,10 +3,9 @@ package com.integrate.mingweidev.mvp.presenter;
 import android.content.Context;
 
 import com.integrate.mingweidev.mvp.base.BasePresenter;
-import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.contract.CBook;
 import com.integrate.mingweidev.mvp.model.MBookImpl;
-import com.integrate.mingweidev.utils.rxhelper.RxObservable;
+import com.integrate.mingweidev.mvp.view.activity.BookActivity;
 
 
 /**
@@ -16,28 +15,48 @@ import com.integrate.mingweidev.utils.rxhelper.RxObservable;
 
 public class PBookImpl extends BasePresenter<CBook.IVBook, MBookImpl> implements CBook.IPBook {
 
-
+    BookActivity bookActivity;
     public PBookImpl(Context mContext, CBook.IVBook mView) {
         super(mContext, mView, new MBookImpl());
+        if(mView instanceof BookActivity) {
+            bookActivity = (BookActivity) mView;
+        }
     }
 
 
     @Override
     public void pBook() {
         mView.showLoading();
-        mModel.mBook(new RxObservable<BookBean>() {
-
-            @Override
-            public void onSuccess(BookBean bean) {
-                mView.hideLoading();
-                mView.vBookSuccess(bean);
-            }
-
-            @Override
-            public void onFail(String reason) {
-                mView.hideLoading();
-                mView.vBookError(reason);
-            }
-        });
+//        mModel.mBook(new RxObservable<BookBean>() {
+//
+//            @Override
+//            public void onSuccess(BookBean bean) {
+//                mView.hideLoading();
+//                mView.vBookSuccess(bean);
+//            }
+//
+//            @Override
+//            public void onFail(String reason) {
+//                mView.hideLoading();
+//                mView.vBookError(reason);
+//            }
+//        });
+//        RxHttpUtils.downloadFile("https://appbundle.holdsoft.cn/holdstore_18102701.apk")
+//                .subscribe(new DownloadObserver("mingwei.apk") {
+//            @Override
+//            protected void getDisposable(Disposable disposable) {
+//
+//            }
+//
+//            @Override
+//            protected void onError(String s) {
+//
+//            }
+//
+//            @Override
+//            protected void onSuccess(long l, long l1, float v, boolean b, String s) {
+//                bookActivity.setProsess(l,l1,v,b,s);
+//            }
+//        });
     }
 }

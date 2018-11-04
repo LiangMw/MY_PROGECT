@@ -12,7 +12,7 @@ public class MFragmentTest extends BaseModel {
 
     public void mFragmentBook(RxObservable rxObservable){
 
-        apiService().bookClassifyfragment()
+        apiService().bookClassifyfragment("mingweiparam",28)
                 .compose(RxTransformer.switchSchedulers(MFragmentTest.this))
                 .subscribe(rxObservable);
 

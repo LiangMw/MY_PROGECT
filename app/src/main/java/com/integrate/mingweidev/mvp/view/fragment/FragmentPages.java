@@ -2,6 +2,7 @@ package com.integrate.mingweidev.mvp.view.fragment;
 
 
 import com.integrate.mingweidev.mvp.view.fragment.files.FilesCategoryFragment;
+import com.integrate.mingweidev.mvp.view.fragment.news.NewsMainFragment;
 import com.integrate.mingweidev.mvp.view.fragment.test.TestFragment;
 
 /**
@@ -11,6 +12,7 @@ public enum FragmentPages {
 
     //顺风车身份选择界面
     WINDCAR_IDENTITYCHOICE(1001, FilesCategoryFragment.class),
+    NEWS_LIST(1003, NewsMainFragment.class),
     WINDCAR_TestFragment(1002,TestFragment.class);
 
     private Class<?> clazz;

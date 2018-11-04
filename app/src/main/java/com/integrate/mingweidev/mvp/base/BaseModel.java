@@ -20,7 +20,7 @@ public abstract class BaseModel {
      * @return
      */
     public DevMvpService apiService() {
-        return DevMvpApi.createApi().create(DevMvpService.class);
+        return DevMvpApi.createApi().createSApi(DevMvpService.class);
     }
     /**
      * 取消网络请求

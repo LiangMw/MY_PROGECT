@@ -11,5 +11,8 @@ public class Url {
 
     public static final String BOOK_CLASSIFYFRAGMENT = "/cats/lv2/statistics";
 
+    //新闻列表
+    public static final String NEWS_LIST = "/cats/lv2/statistics";
+
 
 }

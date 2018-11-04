@@ -18,6 +18,7 @@ import com.integrate.mingweidev.mvp.presenter.PBookImpl;
 public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBook {
 
     private TextView mTv;
+    private TextView tv_path;
     private Button mBtn;
 
     @Override
@@ -25,6 +26,7 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
         super.initView();
         mBtn = findViewById(R.id.btn);
         mTv = findViewById(R.id.tv);
+        tv_path = findViewById(R.id.tv_path);
         mBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -51,6 +53,20 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
 
     @Override
     public void hideLoading() {
+
+    }
+
+    @Override
+    public void neterror() {
+
+    }
+
+    public void setProsess(long l, long l1, float v, boolean b, String s){
+
+        mTv.setText("下 载中：" + v + "%");
+        if (b) {
+            tv_path.setText("下载文件路径：" + s);
+        }
 
     }
 

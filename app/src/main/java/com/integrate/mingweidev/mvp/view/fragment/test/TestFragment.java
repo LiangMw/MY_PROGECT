@@ -84,6 +84,11 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CBook.I
     }
 
     @Override
+    public void neterror() {
+
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);

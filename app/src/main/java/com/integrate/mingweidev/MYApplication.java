@@ -7,7 +7,22 @@ import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
 
+import com.allen.library.RxHttpUtils;
+import com.ihsanbal.logging.Level;
+import com.ihsanbal.logging.LoggingInterceptor;
+import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.ThemeUtils;
+import com.integrate.mingweidev.widget.CircleHeader;
+import com.scwang.smartrefresh.layout.SmartRefreshLayout;
+import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
+import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
+import com.weavey.loading.lib.LoadingLayout;
+
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
+
+import okhttp3.OkHttpClient;
+import okhttp3.internal.platform.Platform;
 
 
 /**
@@ -25,23 +40,6 @@ public class MYApplication extends Application {
 
     public static Resources getAppResources() {
         return app.getResources();
-    }
-
-    /**
-     * 添加activity同意管理
-     *
-     * @param activity
-     */
-    public static void addActivity(Activity activity) {
-        if(!allActivity.contains(activity)) {
-            allActivity.add(activity);
-        }
-    }
-
-    public static void removeAllActivity() {
-        for (Activity a : allActivity) {
-            a.finish();
-        }
     }
 
     @Override
@@ -63,34 +61,34 @@ public class MYApplication extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
-
+        initRxHttpUtils();
 //        startService(new Intent(getAppContext(), BookDownloadService.class));
-//        initRxHttpUtils();
-//        initRefresh();
-//        initLoadingLayout();
+        initRefresh();
+        initLoadingLayout();
     }
 
-//    private void initLoadingLayout() {
-//        LoadingLayout.getConfig()
-//                .setErrorText("出错啦~请稍后重试！")
-//                .setEmptyText("抱歉，暂无数据")
-//                .setNoNetworkText("无网络连接，请检查您的网络···")
-//                .setErrorImage(R.drawable.ic_error_icon)
-//                .setEmptyImage(R.drawable.ic_empty_error)
-//                .setNoNetworkImage(R.drawable.ic_net_error)
-//                .setAllTipTextColor(R.color.black)
-//                .setAllTipTextSize(14)
-//                .setReloadButtonText("点我重试哦")
-//                .setReloadButtonTextSize(14)
-//                .setReloadButtonTextColor(R.color.black)
-//                .setReloadButtonWidthAndHeight(150, 40);
-//    }
+    private void initLoadingLayout() {
+        LoadingLayout.getConfig()
+                .setErrorText("出错啦~请稍后重试！")
+                .setEmptyText("抱歉，暂无数据")
+                .setNoNetworkText("无网络连接，请检查您的网络···")
+                .setErrorImage(R.drawable.ic_error_icon)
+                .setEmptyImage(R.drawable.ic_empty_error)
+                .setNoNetworkImage(R.drawable.ic_net_error)
+                .setAllTipTextColor(R.color.black)
+                .setAllTipTextSize(14)
+                .setReloadButtonText("点我重试哦")
+                .setReloadButtonTextSize(14)
+                .setReloadButtonTextColor(R.color.black)
+                .setReloadButtonWidthAndHeight(150, 40);
+    }
 
-    /* private void initRxHttpUtils() {
-     *//**
-     * 初始化配置
-     *//*
+    private void initRxHttpUtils() {
+        /**
+         * 初始化配置
+         */
         RxHttpUtils.init(this);
+
         OkHttpClient.Builder client = new OkHttpClient().newBuilder()
                 .connectTimeout(20, TimeUnit.SECONDS)
                 .readTimeout(20, TimeUnit.SECONDS)
@@ -122,7 +120,6 @@ public class MYApplication extends Application {
                 //全局是否打开请求log日志
                 .setOkClient(client.build())
                 .setLog(true);
-
     }
 
     private void initRefresh() {
@@ -132,5 +129,22 @@ public class MYApplication extends Application {
             return header;
         });
         SmartRefreshLayout.setDefaultRefreshFooterCreater((context, layout) -> new BallPulseFooter(context).setSpinnerStyle(SpinnerStyle.Translate));
-    }*/
+    }
+
+    /**
+     * 添加activity同意管理
+     *
+     * @param activity
+     */
+    public static void addActivity(Activity activity) {
+        if(!allActivity.contains(activity)) {
+            allActivity.add(activity);
+        }
+    }
+
+    public static void removeAllActivity() {
+        for (Activity a : allActivity) {
+            a.finish();
+        }
+    }
 }

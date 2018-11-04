@@ -1,4 +1,4 @@
-package com.integrate.mingweidev.mvp.model;
+package com.integrate.mingweidev.mvp.bean;
 
 import java.io.Serializable;
 

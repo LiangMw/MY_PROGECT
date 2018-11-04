@@ -5,7 +5,7 @@ package com.integrate.mingweidev.utils;
  */
 
 public class Constant {
-    public static String BASE_URL = "http://192.168.1.121:3389";
+    public static String BASE_URL = "http://api.zhuishushenqi.com";
 
     public static final String ZHUISHU_IMAGE_URL = "http://statics.zhuishushenqi.com";
     //Book Date Convert Format

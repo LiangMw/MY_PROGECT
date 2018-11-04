@@ -47,4 +47,9 @@ public class MusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IV
     public void hideLoading() {
     }
 
+    @Override
+    public void neterror() {
+
+    }
+
 }

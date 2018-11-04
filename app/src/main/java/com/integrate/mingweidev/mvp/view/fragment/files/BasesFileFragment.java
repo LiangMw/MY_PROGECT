@@ -3,6 +3,7 @@ package com.integrate.mingweidev.mvp.view.fragment.files;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.LocalFileBean;
 import com.integrate.mingweidev.mvp.view.adapter.ad_files.LocalFileAdapter;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;

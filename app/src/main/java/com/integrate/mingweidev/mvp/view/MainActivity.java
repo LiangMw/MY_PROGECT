@@ -23,7 +23,7 @@ import com.afollestad.materialdialogs.color.ColorChooserDialog;
 import com.integrate.mingweidev.MYApplication;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.MainBaseActivity;
-import com.integrate.mingweidev.mvp.model.MainMenuBean;
+import com.integrate.mingweidev.mvp.bean.MainMenuBean;
 import com.integrate.mingweidev.mvp.view.adapter.MainMenuAdapter;
 import com.integrate.mingweidev.mvp.view.fragment.FunctionFragment;
 import com.integrate.mingweidev.utils.BaseUtils;

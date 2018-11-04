@@ -13,11 +13,10 @@ public class MBookImpl extends BaseModel {
 
     public void mBook(RxObservable rxObservable) {
         apiService()
-                .bookClassify()
+                .bookClassify("mingweipath")
                 .compose(RxTransformer.switchSchedulers(this))
                 .subscribe(rxObservable);
     }
-
 
 }
 

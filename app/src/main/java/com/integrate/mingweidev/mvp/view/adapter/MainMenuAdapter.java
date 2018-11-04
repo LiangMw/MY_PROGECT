@@ -6,7 +6,7 @@ import android.widget.TextView;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.integrate.mingweidev.R;
-import com.integrate.mingweidev.mvp.model.MainMenuBean;
+import com.integrate.mingweidev.mvp.bean.MainMenuBean;
 import com.integrate.mingweidev.utils.DimenUtils;
 
 import java.util.List;
