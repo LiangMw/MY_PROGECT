@@ -6,7 +6,6 @@ import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
-import com.integrate.mingweidev.utils.LogUtils;
 
 import java.util.List;
 
@@ -29,8 +28,6 @@ public class NewsListAdapter extends BaseQuickAdapter<NewsListBean.FemaleBean, B
     protected void convert(BaseViewHolder helper, NewsListBean.FemaleBean item) {
         helper.setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_count, item.getBookCount() + "本");
-
-        LogUtils.e("------------------"+i++);
 
 //        Glide.with(mContext).load(Constant.BASE_URL+item.getIcon())
 //                .apply(new RequestOptions().placeholder(R.drawable.ic_default))

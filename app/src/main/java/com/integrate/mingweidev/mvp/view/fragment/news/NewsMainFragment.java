@@ -10,13 +10,11 @@ import android.view.ViewGroup;
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
-import com.integrate.mingweidev.mvp.base.IBaseRefresthAndLoadmoreView;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
 import com.integrate.mingweidev.mvp.contract.CNewsList;
 import com.integrate.mingweidev.mvp.presenter.pnews.PNewsImpl;
 import com.integrate.mingweidev.mvp.view.adapter.news.NewsListAdapter;
 import com.integrate.mingweidev.utils.LoadingHelper;
-import com.integrate.mingweidev.utils.LogUtils;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;
 import com.scwang.smartrefresh.layout.listener.OnRefreshLoadmoreListener;
@@ -33,7 +31,7 @@ import butterknife.Unbinder;
  * Created by 梁明伟 on 2018/11/4.
  * Copyright © 2018年 CETC. All rights reserved.
  */
-public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsList.IVNewsList,IBaseRefresthAndLoadmoreView {
+public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsList.IVNewsList {
 
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
@@ -106,7 +104,6 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
             loadinglayout.setStatus(LoadingLayout.Empty);
         }
         if(newsListAdapter == null) {
-            LogUtils.e("------------------NewsListAdapter前");
             newsListAdapter = new NewsListAdapter(datas);
             rvClassify.setLayoutManager(new LinearLayoutManager(mContext));
             newsListAdapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
@@ -118,8 +115,6 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
 //                startActivity(BookListActivity.class, bundle);
             });
         }else{
-            LogUtils.e("------------------notify前"+datas.size());
-
             newsListAdapter.setNewData(datas);
             newsListAdapter.notifyDataSetChanged();
         }
@@ -166,16 +161,5 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
     public void onDestroyView() {
         super.onDestroyView();
         unbinder.unbind();
-    }
-
-    @Override
-    public void showRandLLoading() {
-
-    }
-
-    @Override
-    public void stopRandLLoading() {
-        mRefreshLayout.finishRefresh();
-        mRefreshLayout.finishLoadmore();
     }
 }
