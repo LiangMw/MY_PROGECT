@@ -92,7 +92,7 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
     }
 
     @Override
-    public void newlistSuccess(NewsListBean bean) {
+    public void newslistSuccess(NewsListBean bean) {
 
         mRefreshLayout.finishRefresh();
         mRefreshLayout.finishLoadmore();
@@ -118,12 +118,10 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
             newsListAdapter.setNewData(datas);
             newsListAdapter.notifyDataSetChanged();
         }
-
-
     }
 
     @Override
-    public void newlistError(String reason) {
+    public void newslistError(String reason) {
         loadinglayout.setEmptyText(reason).setStatus(LoadingLayout.Error);
         mRefreshLayout.finishRefresh();
         mRefreshLayout.finishLoadmore();

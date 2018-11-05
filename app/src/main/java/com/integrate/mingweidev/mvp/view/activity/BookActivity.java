@@ -61,7 +61,7 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
 
     }
 
-    public void setProsess(long l, long l1, float v, boolean b, String s){
+    public void setProsess(long l, long l1, float v, boolean b, String s) {
 
         mTv.setText("下 载中：" + v + "%");
         if (b) {
@@ -72,7 +72,7 @@ public class BookActivity extends BaseActivity<PBookImpl> implements CBook.IVBoo
 
     @Override
     public void vBookSuccess(BookBean bean) {
-        mTv.setText("网络请求成功"+bean.getFemale().get(0).getName());
+        mTv.setText("网络请求成功" + bean.getFemale().get(0).getName());
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.integrate.mingweidev.mvp.view;
 
+import android.Manifest;
 import android.animation.Animator;
+import android.content.Intent;
 import android.content.res.TypedArray;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
@@ -25,8 +27,12 @@ import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.MainBaseActivity;
 import com.integrate.mingweidev.mvp.bean.MainMenuBean;
 import com.integrate.mingweidev.mvp.view.adapter.MainMenuAdapter;
+import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
 import com.integrate.mingweidev.mvp.view.fragment.FunctionFragment;
+import com.integrate.mingweidev.utils.AppMethod;
 import com.integrate.mingweidev.utils.BaseUtils;
+import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.SharedPreUtils;
 import com.integrate.mingweidev.utils.SnackBarUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
@@ -42,6 +48,8 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.ButterKnife;
 import butterknife.OnClick;
+import me.weyye.hipermission.HiPermission;
+import me.weyye.hipermission.PermissionCallback;
 
 public class MainActivity extends MainBaseActivity implements ColorChooserDialog.ColorCallback {
 
@@ -77,6 +85,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     private long fristTime = 0;
     private FragmentManager fragmentManager;
     private String currentFragmentTag;
+    private int CHOOSEFILE_CODE = 10001;
     private View.OnClickListener leftlistener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -98,11 +107,11 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         initMenu();
         fragmentManager = getSupportFragmentManager();
         switchFragment("功能");
-        initThemeToolBar("功能", R.drawable.ic_classify,R.drawable.ic_setting, leftlistener, rightlistener);
+        initThemeToolBar("功能", false, R.drawable.ic_classify, leftlistener);
     }
 
     private void initMenu() {
-        mTvDesc.setText("jsjflasjk士大夫撒分散式撒的发顺丰撒的发生的fdsj");
+        mTvDesc.setText("愿得一人心 免得再相亲");
         mTvDesc.setSelected(true);
         BaseUtils.setIconDrawable(mTvSetting, R.drawable.ic_setting);
         BaseUtils.setIconDrawable(mTvTheme, R.drawable.ic_theme);
@@ -113,46 +122,74 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         mainMenuAdapter.setOnItemClickListener((adapter, view, position) -> {
             String name = menuBeans.get(position).getName();
             switch (name) {
-                case "扫描书籍":
-                    /*RxPermissions rxPermissions = new RxPermissions(this);
-                    rxPermissions
-                            .requestEach(Manifest.permission.READ_EXTERNAL_STORAGE,
-                                    Manifest.permission.WRITE_EXTERNAL_STORAGE)
-                            .subscribe(permission -> {
-                                if (permission.granted) {
-                                    // 用户已经同意该权限
-                                    this.switchFragment(name);
-                                    mTvToolBarTitle.setText(name);
-                                    mIvToolBarBack.setImageResource(menuBeans.get(position).getIcon());
-                                    mResideLayout.closePane();
-                                } else if (permission.shouldShowRequestPermissionRationale) {
-                                    // 用户拒绝了该权限，没有选中『不再询问』（Never ask again）,那么下次再次启动时，还会提示请求权限的对话框
-                                    ToastUtils.show("用户拒绝开启读写权限");
-                                    mResideLayout.closePane();
-                                } else {
-                                    // 用户拒绝了该权限，并且选中『不再询问』
-                                    mResideLayout.closePane();
-                                    SnackBarUtils.makeShort(MainActivity.this.getWindow().getDecorView(), "读写权限被禁止,移步到应用管理允许权限").show("去设置", new View.OnClickListener() {
-                                        @Override
-                                        public void onClick(View v) {
-                                            BaseUtils.getAppDetailSettingIntent(mContext, getPackageName());
-                                        }
-                                    });
+                case "文件管理":
+                    if (!HiPermission.checkPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        HiPermission.create(MainActivity.this)
+                                .title("请允许以下权限")
+                                .msg("为了收复钓鱼岛")
+                                .style(R.style.AppTheme)
+                                .filterColor(ThemeUtils.getThemeColor())
+                                .animStyle(R.anim.popup_enter)
+                                .checkSinglePermission(Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionCallback() {
+                                    @Override
+                                    public void onClose() {
+                                        SnackBarUtils.makeShort(MainActivity.this.getWindow().getDecorView(), "读写权限被禁止");
+                                    }
 
-                                }
-                            });*/
+                                    @Override
+                                    public void onFinish() {
+
+                                    }
+
+                                    @Override
+                                    public void onDeny(String permission, int position) {
+
+                                    }
+
+                                    @Override
+                                    public void onGuarantee(String permission, int position) {
+                                        AppMethod.postShowForResult(MainActivity.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
+                                    }
+                                });
+                    } else {
+                        AppMethod.postShowForResult(MainActivity.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
+                    }
                     break;
-                case "书架":
-                   /* switchFragment(name);
-                    mTvToolBarTitle.setText(name);
-                    mIvToolBarBack.setImageResource(menuBeans.get(position).getIcon());
-                    mResideLayout.closePane();*/
+                case "扫描文件":
+                    if (!HiPermission.checkPermission(MainActivity.this, Manifest.permission.READ_EXTERNAL_STORAGE)) {
+                        HiPermission.create(MainActivity.this)
+                                .title("请允许以下权限")
+                                .msg("为了收复钓鱼岛")
+                                .style(R.style.AppTheme)
+                                .filterColor(ThemeUtils.getThemeColor())
+                                .animStyle(R.anim.popup_enter)
+                                .checkSinglePermission(Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionCallback() {
+                                    @Override
+                                    public void onClose() {
+                                        SnackBarUtils.makeShort(MainActivity.this.getWindow().getDecorView(), "读写权限被禁止");
+                                    }
+
+                                    @Override
+                                    public void onFinish() {
+
+                                    }
+
+                                    @Override
+                                    public void onDeny(String permission, int position) {
+
+                                    }
+
+                                    @Override
+                                    public void onGuarantee(String permission, int position) {
+                                        AppMethod.postShowForResult(MainActivity.this, CHOOSEFILE_CODE, FragmentPages.FILE_SEARCH);
+                                    }
+                                });
+                    } else {
+                        AppMethod.postShowForResult(MainActivity.this, CHOOSEFILE_CODE, FragmentPages.FILE_SEARCH);
+                    }
                     break;
                 case "功能":
-                   /* switchFragment(name);
-                    mTvToolBarTitle.setText(name);
-                    mIvToolBarBack.setImageResource(menuBeans.get(position).getIcon());
-                    mResideLayout.closePane();*/
+                    mResideLayout.closePane();
                     break;
                 case "缓存列表":
                    /* startActivity(BookDownloadActivity.class);
@@ -378,6 +415,18 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     }
 
     @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == CHOOSEFILE_CODE) {
+            if (data != null) {
+                String dat = data.getStringExtra(Constant.TAG_FILERESULT);
+                LogUtils.e("----------dat:" + dat);
+            }
+
+        }
+    }
+
+    @Override
     public void onBackPressed() {
         if (mResideLayout.isOpen()) {
             mResideLayout.closePane();
@@ -392,5 +441,4 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
             }
         }
     }
-
 }

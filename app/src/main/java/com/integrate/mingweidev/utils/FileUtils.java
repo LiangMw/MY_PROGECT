@@ -1,8 +1,10 @@
 package com.integrate.mingweidev.utils;
 
 import android.os.Environment;
+import android.widget.TextView;
 
 import com.integrate.mingweidev.MYApplication;
+
 import java.io.BufferedInputStream;
 import java.io.BufferedReader;
 import java.io.File;
@@ -154,7 +156,7 @@ public class FileUtils {
     }
 
     //获取txt文件
-    public static List<File> getTxtFiles(String filePath){
+    public static List<File> getTxtFiles(String filePath,TextView textView){
         List txtFiles = new ArrayList();
         File file = new File(filePath);
         //获取文件夹
@@ -164,7 +166,7 @@ public class FileUtils {
                         return true;
                     }
                     //获取txt文件
-                    else if(pathname.getName().endsWith(".txt")){
+                    else if(pathname.getName().endsWith(".mp3")){
                         txtFiles.add(pathname);
                         return false;
                     }
@@ -176,19 +178,20 @@ public class FileUtils {
         //遍历文件夹
         for (File dir : dirs){
             //递归遍历txt文件
-            txtFiles.addAll(getTxtFiles(dir.getPath()));
+            textView.setText(dir.getPath());
+            txtFiles.addAll(getTxtFiles(dir.getPath(),textView));
         }
         return txtFiles;
     }
 
     //由于遍历比较耗时
-    public static Single<List<File>> getSDTxtFile(){
+    public static Single<List<File>> getSDTxtFile(TextView textView){
         //外部存储卡路径
         String rootPath = Environment.getExternalStorageDirectory().getPath();
         return Single.create(new SingleOnSubscribe<List<File>>() {
             @Override
             public void subscribe(SingleEmitter<List<File>> e) throws Exception {
-                List<File> files = getTxtFiles(rootPath);
+                List<File> files = getTxtFiles(rootPath,textView);
                 e.onSuccess(files);
             }
         });

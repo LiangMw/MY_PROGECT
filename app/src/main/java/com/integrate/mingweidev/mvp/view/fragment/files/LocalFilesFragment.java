@@ -2,11 +2,13 @@ package com.integrate.mingweidev.mvp.view.fragment.files;
 
 import android.app.Activity;
 import android.content.Intent;
-import android.os.Environment;
+import android.os.Bundle;
 import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.TextView;
@@ -15,33 +17,38 @@ import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.bean.LocalFileBean;
 import com.integrate.mingweidev.mvp.view.adapter.ad_files.LocalFileAdapter;
 import com.integrate.mingweidev.utils.Constant;
-import com.integrate.mingweidev.utils.FileStack;
+import com.integrate.mingweidev.utils.FileUtils;
+import com.integrate.mingweidev.utils.LoadingHelper;
 import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
+import com.integrate.mingweidev.utils.rxhelper.RxUtils;
 import com.integrate.mingweidev.widget.DividerItemDecoration;
+import com.integrate.mingweidev.widget.theme.ColorButton;
+import com.weavey.loading.lib.LoadingLayout;
 
 import java.io.File;
-import java.io.FileFilter;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 import butterknife.BindView;
 import butterknife.OnClick;
 
+import static com.allen.library.RxHttpUtils.addDisposable;
+
 /**
- * Created by Liang_Lu on 2017/12/1.
+ * Created by Liang_Lu on 2017/11/29.
  */
 
-public class FilesCategoryFragment extends BasesFileFragment {
-    @BindView(R.id.file_category_tv_path)
-    TextView mTvPath;
-    @BindView(R.id.file_category_tv_back_last)
-    TextView mTvBackLast;
-    @BindView(R.id.rv_file_category)
-    RecyclerView mRvFileCategory;
+public class LocalFilesFragment extends BasesFileFragment {
+
+    @BindView(R.id.btn_scan)
+    ColorButton mBtnScan;
+    @BindView(R.id.rv_files)
+    RecyclerView mRvFiles;
+    @BindView(R.id.loadlayout)
+    LoadingLayout loadlayout;
+    @BindView(R.id.tv_searchpath)
+    TextView tv_searchpath;
     @BindView(R.id.file_system_cb_selected_all)
     CheckBox mCbSelectAll;
     @BindView(R.id.file_system_btn_add_book)
@@ -50,17 +57,17 @@ public class FilesCategoryFragment extends BasesFileFragment {
     Button mBtnDelete;
 
     List<LocalFileBean> mFileBeans = new ArrayList<>();
-    private FileStack mFileStack;
 
-    public static FilesCategoryFragment newInstance() {
-        FilesCategoryFragment fragment = new FilesCategoryFragment();
+    public static LocalFilesFragment newInstance() {
+        LocalFilesFragment fragment = new LocalFilesFragment();
         return fragment;
     }
 
     @Override
-    public void setTitleBar(ActionBarRes mActionBarRes) {
-        super.setTitleBar(mActionBarRes);
-        mActionBarRes.mTitle = "文件选择";
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        return rootView;
     }
 
     /**
@@ -70,7 +77,7 @@ public class FilesCategoryFragment extends BasesFileFragment {
      */
     @Override
     public int getLayoutRes() {
-        return R.layout.fragment_files_category;
+        return R.layout.fragment_local_book;
     }
 
     /**
@@ -83,65 +90,37 @@ public class FilesCategoryFragment extends BasesFileFragment {
 
     @Override
     public void initView() {
-        mFileStack = new FileStack();
+
         mAdapter = new LocalFileAdapter(mFileBeans);
-        mRvFileCategory.setLayoutManager(new LinearLayoutManager(getContext()));
-        mRvFileCategory.addItemDecoration(new DividerItemDecoration(getContext()));
-        mRvFileCategory.setAdapter(mAdapter);
+        mRvFiles.setLayoutManager(new LinearLayoutManager(mContext));
+        mRvFiles.addItemDecoration(new DividerItemDecoration(mContext));
+        mRvFiles.setAdapter(mAdapter);
         //设置某些按钮的不可点击
         setMenuClickable(false);
-        File root = Environment.getExternalStorageDirectory();
-        toggleFileTree(root);
-
         mAdapter.setOnItemClickListener((adapter, view, position) -> {
-            File file = mFileBeans.get(position).getFile();
-            if (file.isDirectory()) {
-                //保存当前信息。
-                FileStack.FileSnapshot snapshot = new FileStack.FileSnapshot();
-                snapshot.filePath = mTvPath.getText().toString();
-                snapshot.files = new ArrayList<File>(mAdapter.getAllFiles());
-                snapshot.scrollOffset = mRvFileCategory.computeVerticalScrollOffset();
-                mFileStack.push(snapshot);
-                //切换下一个文件
-                toggleFileTree(file);
-                setMenuClickable(false);
-                mAdapter.resetCheckCount();
-                changeMenuStatus();
-            } else {
-                //如果是已加载的文件，则点击事件无效。
-                String id = file.getAbsolutePath();
-//                if (CollBookHelper.getsInstance().findBookById(id) != null) {
-//                    return;
-//                }
-                //点击选中
-                mAdapter.setCheckedItem(position);
-                changeMenuStatus();
-                //反馈
-                if (mListener != null) {
-                    mListener.onItemCheckedChange(mAdapter.getItemIsChecked(position));
-                }
-            }
-
-        });
-
-        mTvBackLast.setOnClickListener(v -> {
-            FileStack.FileSnapshot snapshot = mFileStack.pop();
-            int oldScrollOffset = mRvFileCategory.computeHorizontalScrollOffset();
-            if (snapshot == null) return;
-            mTvPath.setText(snapshot.filePath);
-            addFiles(snapshot.files);
-            mRvFileCategory.scrollBy(0, snapshot.scrollOffset - oldScrollOffset);
+            //如果是已加载的文件，则点击事件无效。
+//            String id = mFileBeans.get(position).getFile().getAbsolutePath();
+//            if (CollBookHelper.getsInstance().findBookById(id) != null) {
+//                return;
+//            }
+            mAdapter.setCheckedItem(position);
+            changeMenuStatus();
             //反馈
             if (mListener != null) {
-                mListener.onCategoryChanged();
+                mListener.onItemCheckedChange(mAdapter.getItemIsChecked(position));
             }
-            setMenuClickable(false);
-            if(mAdapter !=null) {
-                mAdapter.resetCheckCount();
-            }
-            changeMenuStatus();
         });
+        mBtnScan.setOnClickListener(v -> {
+            tv_searchpath.setVisibility(View.VISIBLE);
+            mBtnScan.setEnabled(false);
+            scanFiles(tv_searchpath);
+        });
+    }
 
+    @Override
+    public void setTitleBar(ActionBarRes mActionBarRes) {
+        super.setTitleBar(mActionBarRes);
+        mActionBarRes.mTitle = getString(R.string.searchfile);
     }
 
     @Override
@@ -163,12 +142,6 @@ public class FilesCategoryFragment extends BasesFileFragment {
                 changeCheckedAllStatus();
             }
         });
-    }
-
-    @Override
-    public void onBackListener() {
-        super.onBackListener();
-        getActivity().finish();
     }
 
     /**
@@ -199,23 +172,6 @@ public class FilesCategoryFragment extends BasesFileFragment {
         mBtnAddBook.setClickable(isClickable);
     }
 
-    private void toggleFileTree(File file) {
-        //路径名
-        mTvPath.setText(getString(R.string.wy_file_path, file.getPath()));
-        //获取数据
-        File[] files = file.listFiles(new SimpleFileFilter());
-        //转换成List
-        List<File> rootFiles = Arrays.asList(files);
-        //排序
-        Collections.sort(rootFiles, new FileComparator());
-        //加入
-        addFiles(rootFiles);
-        //反馈
-        if (mListener != null) {
-            mListener.onCategoryChanged();
-        }
-    }
-
     /**
      * 改变底部选择栏的状态
      */
@@ -233,7 +189,7 @@ public class FilesCategoryFragment extends BasesFileFragment {
             }
 
         } else {
-            mBtnAddBook.setText(getString(R.string.select)+ getCheckedCount());
+            mBtnAddBook.setText(getString(R.string.select)+getCheckedCount());
             setMenuClickable(true);
 
             //全选状态的设置
@@ -257,22 +213,40 @@ public class FilesCategoryFragment extends BasesFileFragment {
         } else {
             mCbSelectAll.setText("全选");
         }
+
     }
 
     /**
-     * 添加文件数据
-     *
-     * @param files
+     * 搜索文件
      */
-    private void addFiles(List<File> files) {
-        mFileBeans.clear();
-        for (File file : files) {
-            LocalFileBean localFileBean = new LocalFileBean();
-            localFileBean.setSelect(false);
-            localFileBean.setFile(file);
-            mFileBeans.add(localFileBean);
-        }
-        mAdapter.notifyDataSetChanged();
+    private void scanFiles(TextView textView) {
+        LoadingHelper.getInstance().showLoading(mContext,false);
+        addDisposable(FileUtils.getSDTxtFile(textView)
+                .compose(RxUtils::toSimpleSingle)
+                .subscribe(
+                        files -> {
+                            LoadingHelper.getInstance().hideLoading();
+                            tv_searchpath.setVisibility(View.GONE);
+                            mBtnScan.setEnabled(true);
+                            mFileBeans.clear();
+                            if (files.size() == 0) {
+                                loadlayout.setStatus(LoadingLayout.Empty);
+                            } else {
+                                loadlayout.setStatus(LoadingLayout.Success);
+                                for (File file : files) {
+                                    LocalFileBean localFileBean = new LocalFileBean();
+                                    localFileBean.setSelect(false);
+                                    localFileBean.setFile(file);
+                                    mFileBeans.add(localFileBean);
+                                }
+                                mAdapter.notifyDataSetChanged();
+
+                                //反馈
+                                if (mListener != null) {
+                                    mListener.onCategoryChanged();
+                                }
+                            }
+                        }));
     }
 
     @OnClick({R.id.file_system_cb_selected_all, R.id.file_system_btn_add_book, R.id.file_system_btn_delete})
@@ -299,8 +273,8 @@ public class FilesCategoryFragment extends BasesFileFragment {
 
                 //这里是带回的信息，以后可以直接用了
                 Intent intent = new Intent();
-                intent.putExtra(Constant.TAG_FILERESULT,s);
-                getActivity().setResult(Activity.RESULT_OK,intent);
+                intent.putExtra(Constant.TAG_FILERESULT, s);
+                getActivity().setResult(Activity.RESULT_OK, intent);
                 getActivity().finish();
 
                 //转换成CollBook,并存储
@@ -329,43 +303,6 @@ public class FilesCategoryFragment extends BasesFileFragment {
                         .setNegativeButton(getResources().getString(R.string.wy_common_cancel), null)
                         .show();
                 break;
-        }
-    }
-
-    public class FileComparator implements Comparator<File> {
-        @Override
-        public int compare(File o1, File o2) {
-            if (o1.isDirectory() && o2.isFile()) {
-                return -1;
-            }
-            if (o2.isDirectory() && o1.isFile()) {
-                return 1;
-            }
-            return o1.getName().compareToIgnoreCase(o2.getName());
-        }
-    }
-
-    public class SimpleFileFilter implements FileFilter {
-        @Override
-        public boolean accept(File pathname) {
-            if (pathname.getName().startsWith(".")) {
-                return false;
-            }
-            //文件夹内部数量为0
-            if (pathname.isDirectory() && pathname.list().length == 0) {
-                return false;
-            }
-
-            /**
-             * 现在只支持TXT文件的显示
-             */
-            //文件内容为空,或者不以txt为开头
-            if (!pathname.isDirectory() &&
-//                    (pathname.length() == 0 || !pathname.getName().endsWith(FileUtils.SUFFIX_TXT))) {
-                    (pathname.length() == 0)) {//|| !pathname.getName().endsWith(FileUtils.SUFFIX_TXT)//接收所有文件
-                return false;
-            }
-            return true;
         }
     }
 

@@ -4,20 +4,21 @@ import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.GridView;
 
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
-import com.integrate.mingweidev.mvp.view.activity.BookActivity;
 import com.integrate.mingweidev.mvp.view.adapter.FunctionAdapter;
 import com.integrate.mingweidev.utils.AppMethod;
 import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.LoadingHelper;
 import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.SnackBarUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
-import com.integrate.mingweidev.utils.ToastUtils;
 
 import butterknife.BindView;
 import me.weyye.hipermission.HiPermission;
@@ -34,9 +35,18 @@ public class FunctionFragment extends BaseFragment {
     GridView gvView;
 
     private int[] icons = new int[]{R.mipmap.f_files, R.mipmap.f_music, R.drawable.f_photo};
-    private String[] names = new String[]{"文件", "音乐", "图片"};
+    private String[] names = new String[]{"文件", "音乐", "新闻"};
     private FunctionAdapter adapter;
     private int CHOOSEFILE_CODE = 10001;
+    private Handler mhandler = new Handler() {
+        @Override
+        public void handleMessage(Message msg) {
+            super.handleMessage(msg);
+            if (msg.what == 1) {
+                LoadingHelper.getInstance().hideLoading();
+            }
+        }
+    };
 
     public static FunctionFragment newInstance() {
         FunctionFragment fragment = new FunctionFragment();
@@ -105,16 +115,30 @@ public class FunctionFragment extends BaseFragment {
 
                                         @Override
                                         public void onGuarantee(String permission, int position) {
-                                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
                                         }
                                     });
                         } else {
-                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.WINDCAR_IDENTITYCHOICE);
+                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
                         }
                         break;
                     case 1:
-                        startActivity(BookActivity.class);
-                        ToastUtils.show(names[i]);
+//                        startActivity(BookActivity.class);
+//                        ToastUtils.show(names[i]);
+                        LoadingHelper.getInstance().showLoading(getActivity());
+                        new Thread(new Runnable() {
+                            @Override
+                            public void run() {
+
+                                try {
+                                    Thread.sleep(5000);
+                                    mhandler.sendEmptyMessage(1);
+                                } catch (InterruptedException e) {
+                                    e.printStackTrace();
+                                }
+                            }
+                        }).start();
+
                         break;
                     case 2:
                         AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);

@@ -18,8 +18,8 @@ public interface CNewsList {
 
     interface IVNewsList extends IBaseView{
 
-        void newlistSuccess(NewsListBean bean);
+        void newslistSuccess(NewsListBean bean);
 
-        void newlistError(String reason);
+        void newslistError(String reason);
     }
 }

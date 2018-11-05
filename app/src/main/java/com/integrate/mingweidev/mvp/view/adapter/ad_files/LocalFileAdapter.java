@@ -137,6 +137,10 @@ public class LocalFileAdapter extends BaseQuickAdapter<LocalFileBean, BaseViewHo
         return count;
     }
 
+    public void resetCheckCount(){
+        mCheckedCount = 0;
+    }
+
     /**
      * 判断是否选中
      *

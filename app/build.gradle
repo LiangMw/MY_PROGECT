@@ -7,12 +7,22 @@ android {
         minSdkVersion 21
         targetSdkVersion 26
         versionCode 1
-        versionName "1.0"
+        versionName "1.0.1"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     packagingOptions {
         exclude 'META-INF/rxjava.properties'
     }
+
+    signingConfigs {
+        config {
+            keyAlias 'mingwei'
+            keyPassword '123456'
+            storeFile file('D:/work/keyStore/13所oa/keyStore.jks')
+            storePassword '123456'
+        }
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -107,12 +117,6 @@ dependencies {
      * BaseRecyclerViewAdapterHelper
      */
     implementation "com.github.CymChad:BaseRecyclerViewAdapterHelper:2.9.30"
-
-    /**
-     * md_dialog
-     */
-    implementation "com.afollestad.material-dialogs:core:0.9.0.2"
-    implementation "com.afollestad.material-dialogs:commons:0.9.0.2"
 
     /**
      * tablayout
