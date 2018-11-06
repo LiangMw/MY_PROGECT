@@ -15,7 +15,7 @@ import retrofit2.http.Query;
 
 public interface DevMvpService {
 
-    @GET(Url.BOOK_CLASSIFY+ "/{bookId}")
+    @GET(Url.BOOK_CLASSIFY + "/{bookId}")
     Observable<BookBean> bookClassify(@Path("bookId") String bookId);
 
     @GET(Url.BOOK_CLASSIFYFRAGMENT)
@@ -23,6 +23,6 @@ public interface DevMvpService {
 
     //获取新闻列表
     @GET(Url.NEWS_LIST)
-    Observable<NewsListBean> newsList();
+    Observable<NewsListBean> newsList(@Query("newsid") String newsid);
 
 }

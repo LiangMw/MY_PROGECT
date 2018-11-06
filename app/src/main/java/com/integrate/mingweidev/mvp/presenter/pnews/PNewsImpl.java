@@ -13,7 +13,7 @@ import com.integrate.mingweidev.utils.rxhelper.RxObservable;
  * Created by 梁明伟 on 2018/11/4.
  * Copyright © 2018年 CETC. All rights reserved.
  */
-public class PNewsImpl extends BasePresenter<CNewsList.IVNewsList,MNews> implements CNewsList.IPNewsList {
+public class PNewsImpl extends BasePresenter<CNewsList.IVNewsList, MNews> implements CNewsList.IPNewsList {
 
 
     public PNewsImpl(Context mContext, CNewsList.IVNewsList mView) {
@@ -28,6 +28,7 @@ public class PNewsImpl extends BasePresenter<CNewsList.IVNewsList,MNews> impleme
             mView.neterror();
         }
         mModel.newsList(new RxObservable<NewsListBean>() {
+
             @Override
             public void onSuccess(NewsListBean newsListBean) {
                 mView.newslistSuccess(newsListBean);
@@ -42,7 +43,7 @@ public class PNewsImpl extends BasePresenter<CNewsList.IVNewsList,MNews> impleme
                 mView.newslistError(reason);
                 mView.hideLoading();
             }
-        });
+        }, "520");
 
     }
 }

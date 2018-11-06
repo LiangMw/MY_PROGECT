@@ -10,6 +10,13 @@
         android:layout_height="wrap_content"
         android:text="测试"/>
 
+    <Button
+        android:id="@+id/bt_ddd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_toRightOf="@+id/bt_jjj"
+        android:text="取消"/>
+
     <TextView
         android:id="@+id/tv"
         android:layout_width="match_parent"

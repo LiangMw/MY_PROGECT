@@ -99,7 +99,7 @@ dependencies {
     /**
      * rxhttputils
      */
-    implementation "com.github.lygttpod:RxHttpUtils:2.0.3"
+    implementation "com.github.lygttpod:RxHttpUtils:2.1.7"
 
     /**
      *   logging

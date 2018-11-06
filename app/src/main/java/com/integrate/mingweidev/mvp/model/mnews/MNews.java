@@ -1,5 +1,7 @@
 package com.integrate.mingweidev.mvp.model.mnews;
 
+import com.allen.library.RxHttpUtils;
+import com.integrate.mingweidev.api.DevMvpService;
 import com.integrate.mingweidev.mvp.base.BaseModel;
 import com.integrate.mingweidev.utils.rxhelper.RxObservable;
 import com.integrate.mingweidev.utils.rxhelper.RxTransformer;
@@ -10,8 +12,12 @@ import com.integrate.mingweidev.utils.rxhelper.RxTransformer;
  */
 public class MNews extends BaseModel {
 
-    public void newsList(RxObservable observable){
-        apiService().newsList()
+    public void newsList(RxObservable observable,String newsid) {
+//        apiService().newsList("520")
+//                .compose(RxTransformer.switchSchedulers(MNews.this))
+//                .subscribe(observable);
+        RxHttpUtils.createApi(DevMvpService.class)
+                .newsList(newsid)
                 .compose(RxTransformer.switchSchedulers(MNews.this))
                 .subscribe(observable);
     }

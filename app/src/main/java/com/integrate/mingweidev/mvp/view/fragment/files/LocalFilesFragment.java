@@ -33,8 +33,6 @@ import java.util.List;
 import butterknife.BindView;
 import butterknife.OnClick;
 
-import static com.allen.library.RxHttpUtils.addDisposable;
-
 /**
  * Created by Liang_Lu on 2017/11/29.
  */
@@ -221,7 +219,7 @@ public class LocalFilesFragment extends BasesFileFragment {
      */
     private void scanFiles(TextView textView) {
         LoadingHelper.getInstance().showLoading(mContext,false);
-        addDisposable(FileUtils.getSDTxtFile(textView)
+        FileUtils.getSDTxtFile(textView)
                 .compose(RxUtils::toSimpleSingle)
                 .subscribe(
                         files -> {
@@ -246,7 +244,7 @@ public class LocalFilesFragment extends BasesFileFragment {
                                     mListener.onCategoryChanged();
                                 }
                             }
-                        }));
+                        });
     }
 
     @OnClick({R.id.file_system_cb_selected_all, R.id.file_system_btn_add_book, R.id.file_system_btn_delete})

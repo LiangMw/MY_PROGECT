@@ -125,20 +125,21 @@ public class FunctionFragment extends BaseFragment {
                     case 1:
 //                        startActivity(BookActivity.class);
 //                        ToastUtils.show(names[i]);
-                        LoadingHelper.getInstance().showLoading(getActivity());
-                        new Thread(new Runnable() {
-                            @Override
-                            public void run() {
+//                        LoadingHelper.getInstance().showLoading(getActivity());
+//                        new Thread(new Runnable() {
+//                            @Override
+//                            public void run() {
+//
+//                                try {
+//                                    Thread.sleep(5000);
+//                                    mhandler.sendEmptyMessage(1);
+//                                } catch (InterruptedException e) {
+//                                    e.printStackTrace();
+//                                }
+//                            }
+//                        }).start();
 
-                                try {
-                                    Thread.sleep(5000);
-                                    mhandler.sendEmptyMessage(1);
-                                } catch (InterruptedException e) {
-                                    e.printStackTrace();
-                                }
-                            }
-                        }).start();
-
+                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
                         break;
                     case 2:
                         AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);

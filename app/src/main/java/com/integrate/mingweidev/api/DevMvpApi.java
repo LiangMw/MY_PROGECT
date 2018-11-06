@@ -1,6 +1,7 @@
 package com.integrate.mingweidev.api;
 
 import com.allen.library.RxHttpUtils;
+import com.allen.library.cookie.store.MemoryCookieStore;
 import com.allen.library.http.SingleRxHttp;
 import com.integrate.mingweidev.utils.SharedPreUtils;
 
@@ -14,12 +15,11 @@ import retrofit2.Retrofit;
  */
 
 public class DevMvpApi {
+
     private static Retrofit mRetrofit;
 
     /**
      * Retrofit初始化
-     *
-     *
      * @return
      */
  /*  public static Retrofit createApi() {
@@ -53,8 +53,12 @@ public class DevMvpApi {
         return map;
     }
 
+    /**
+     * 创建单独的请求
+     * @return
+     */
     public static SingleRxHttp createApi(){
-        return RxHttpUtils.getSInstance().addHeaders(tokenMap());
+//        return RxHttpUtils.getSInstance().addHeaders(tokenMap());
 //        RxHttpUtils.getSInstance().addHeaders(tokenMap()).createSApi(BookService.class)
 //                .bookChapters(bookId)
 //                .compose(Transformer.switchSchedulers())
@@ -74,6 +78,34 @@ public class DevMvpApi {
 //                    @Override
 //                    public void onSubscribe(Disposable d) {
 //                        addDisposadle(d);
+//                    }
+//                });
+
+       return RxHttpUtils
+                .getSInstance()
+                .baseUrl("https://api.douban.com/")
+//                .addHeaders(headerMaps)
+                .cache(true)
+                .cachePath("cachePath", 1024 * 1024 * 100)
+                .sslSocketFactory()
+                .cookieType(new MemoryCookieStore())
+                .writeTimeout(10)
+                .readTimeout(10)
+                .connectTimeout(10)
+                .log(true);
+//                .createSApi(ApiService.class)
+//                .getTop250(10)
+//                .compose(Transformer.<Top250Bean>switchSchedulers(loading_dialog))
+//                .subscribe(new CommonObserver<Top250Bean>() {
+//
+//                    @Override
+//                    protected void onError(String errorMsg) {
+//                        //错误处理
+//                    }
+//
+//                    @Override
+//                    protected void onSuccess(Top250Bean top250Bean) {
+//                        //业务处理
 //                    }
 //                });
     }

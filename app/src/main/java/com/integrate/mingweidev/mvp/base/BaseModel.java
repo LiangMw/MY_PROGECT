@@ -1,7 +1,7 @@
 package com.integrate.mingweidev.mvp.base;
 
 
-import com.integrate.mingweidev.api.DevMvpApi;
+import com.allen.library.RxHttpUtils;
 import com.integrate.mingweidev.api.DevMvpService;
 
 import io.reactivex.disposables.CompositeDisposable;
@@ -20,8 +20,11 @@ public abstract class BaseModel {
      * @return
      */
     public DevMvpService apiService() {
-        return DevMvpApi.createApi().createSApi(DevMvpService.class);
+        return  RxHttpUtils.createApi(DevMvpService.class);
     }
+//    public DevMvpService apiService() {
+//        return DevMvpApi.createApi().createSApi(DevMvpService.class);
+//    }
     /**
      * 取消网络请求
      */
