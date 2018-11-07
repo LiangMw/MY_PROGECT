@@ -37,6 +37,7 @@ import com.integrate.mingweidev.utils.SharedPreUtils;
 import com.integrate.mingweidev.utils.SnackBarUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
+import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
 import com.integrate.mingweidev.widget.ResideLayout;
 import com.integrate.mingweidev.widget.theme.ColorRelativeLayout;
 import com.integrate.mingweidev.widget.theme.ColorUiUtil;
@@ -100,6 +101,12 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     };
 
     @Override
+    protected void onResume() {
+        super.onResume();
+        ImageLoadManage.getInstance().display(this,mIvAvatar,"http://mallcomment.holdsoft.cn/1510224399351",true);
+    }
+
+    @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
@@ -111,7 +118,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     }
 
     private void initMenu() {
-        mTvDesc.setText("愿得一人心 免得再相亲");
+        mTvDesc.setText("愿得一人心 免得再相亲。................");
         mTvDesc.setSelected(true);
         BaseUtils.setIconDrawable(mTvSetting, R.drawable.ic_setting);
         BaseUtils.setIconDrawable(mTvTheme, R.drawable.ic_theme);

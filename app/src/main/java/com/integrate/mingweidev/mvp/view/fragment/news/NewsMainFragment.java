@@ -41,7 +41,6 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
     SmartRefreshLayout mRefreshLayout;
     Unbinder unbinder;
 
-    String tabName;
     NewsListAdapter newsListAdapter;
     private List<NewsListBean.FemaleBean> datas = new ArrayList<>();
 
@@ -116,7 +115,6 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
             });
         }else{
             newsListAdapter.setNewData(datas);
-            newsListAdapter.notifyDataSetChanged();
         }
     }
 
@@ -129,6 +127,7 @@ public class NewsMainFragment extends BaseFragment<PNewsImpl> implements CNewsLi
 
     @Override
     public void showLoading() {
+
         LoadingHelper.getInstance().showLoading(mContext);
 
     }

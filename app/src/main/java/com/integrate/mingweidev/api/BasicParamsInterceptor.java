@@ -29,7 +29,7 @@ public class BasicParamsInterceptor implements Interceptor {
     Map<String, String> queryParamsMap = new HashMap<>(); // 添加到 URL 末尾，Get Post 方法都使用
     Map<String, String> paramsMap = new HashMap<>(); // 添加到公共参数到消息体，适用 Post 请求
     Map<String, String> headerParamsMap = new HashMap<>(); // 公共 Headers 添加
-    List<String> headerLinesList = new ArrayList<>(); // 消息头 集合形式，一次添加一行
+    List<String> headerLinesList = new ArrayList<>(); // 消息头 集合形式，一次添加一行  示例： 添加公共消息头  "X-Ping: Pong"
 
     // 私有构造器
     private BasicParamsInterceptor() {

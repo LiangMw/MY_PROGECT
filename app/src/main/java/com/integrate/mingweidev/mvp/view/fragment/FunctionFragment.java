@@ -19,6 +19,7 @@ import com.integrate.mingweidev.utils.LoadingHelper;
 import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.SnackBarUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
+import com.integrate.mingweidev.utils.imageload.ImageSelectManage;
 
 import butterknife.BindView;
 import me.weyye.hipermission.HiPermission;
@@ -139,7 +140,9 @@ public class FunctionFragment extends BaseFragment {
 //                            }
 //                        }).start();
 
-                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
+//                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
+
+                        startActivity(ImageSelectManage.class);
                         break;
                     case 2:
                         AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);

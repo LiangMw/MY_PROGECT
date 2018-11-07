@@ -12,6 +12,7 @@ import com.allen.library.config.OkHttpConfig;
 import com.allen.library.cookie.store.SPCookieStore;
 import com.integrate.mingweidev.api.BasicParamsInterceptor;
 import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.SharedPreUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
 import com.integrate.mingweidev.widget.CircleHeader;
@@ -20,6 +21,7 @@ import com.scwang.smartrefresh.layout.constant.SpinnerStyle;
 import com.scwang.smartrefresh.layout.footer.BallPulseFooter;
 import com.weavey.loading.lib.LoadingLayout;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -36,6 +38,7 @@ public class MYApplication extends Application {
     private static ArrayList<Activity> allActivity = new ArrayList<>();
     private static MYApplication app;
     private Map<String, String> baseparam = new HashMap<>();
+    private String CachePath="";
 
     public static Context getAppContext() {
         return app;
@@ -94,6 +97,10 @@ public class MYApplication extends Application {
         } catch (PackageManager.NameNotFoundException e) {
             e.printStackTrace();
         }
+        File externalCacheDir = this.getExternalCacheDir();
+        if (null != externalCacheDir) {
+            CachePath = externalCacheDir.getPath() + "/CacheData";
+        }
         initRxHttpUtils();
 //        startService(new Intent(getAppContext(), BookDownloadService.class));
         initRefresh();
@@ -115,6 +122,7 @@ public class MYApplication extends Application {
                 //1、在有网络的时候，先去读缓存，缓存时间到了，再去访问网络获取数据；
                 //2、在没有网络的时候，去读缓存中的数据。
                 .setCache(true)
+                .setCachePath(CachePath)
                 //全局持久话cookie,保存到内存（new MemoryCookieStore()）或者保存到本地（new SPCookieStore(this)）
                 //不设置的话，默认不对cookie做处理
                 .setCookieType(new SPCookieStore(this))
