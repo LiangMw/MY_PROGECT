@@ -11,7 +11,6 @@ import com.integrate.mingweidev.mvp.view.fragment.test.TestFragment;
  */
 public enum FragmentPages {
 
-    //顺风车身份选择界面
     FILE_MANAGE(1002, FilesCategoryFragment.class),
     FILE_SEARCH(1003, LocalFilesFragment.class),
     NEWS_LIST(1004, NewsMainFragment.class),

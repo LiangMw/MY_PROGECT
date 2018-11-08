@@ -5,15 +5,17 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.allen.library.RxHttpUtils;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.contract.CTest;
 import com.integrate.mingweidev.mvp.presenter.PFragmentTest;
 import com.integrate.mingweidev.utils.LoadingHelper;
+import com.jph.takephoto.compress.CompressConfig;
+import com.jph.takephoto.model.CropOptions;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -31,8 +33,14 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
     Button btJjj;
     @BindView(R.id.bt_ddd)
     Button bt_ddd;
+    @BindView(R.id.iv_icon)
+    ImageView iv_icon;
 
     Unbinder unbinder;
+
+    private CropOptions cropOptions;  //裁剪参数
+    private CompressConfig compressConfig;  //压缩参数
+
     /**
      * 传入布局文件
      *
@@ -60,14 +68,15 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
             @Override
             public void onClick(View view) {
 
-                mPresenter.pBook();
+//                mPresenter.pBook();
+
             }
         });
 
         bt_ddd.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                RxHttpUtils.cancel("download");
+//                RxHttpUtils.cancel("download");
             }
         });
     }

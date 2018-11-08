@@ -55,9 +55,6 @@
         <activity
             android:name=".mvp.view.activity.BookActivity"
             android:screenOrientation="portrait" />
-        <activity
-            android:name=".utils.imageload.ImageSelectManage"
-            android:screenOrientation="portrait" />
 
     </application>
 

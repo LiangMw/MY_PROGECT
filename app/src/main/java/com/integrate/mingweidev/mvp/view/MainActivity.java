@@ -28,7 +28,7 @@ import com.integrate.mingweidev.mvp.base.MainBaseActivity;
 import com.integrate.mingweidev.mvp.bean.MainMenuBean;
 import com.integrate.mingweidev.mvp.view.adapter.MainMenuAdapter;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
-import com.integrate.mingweidev.mvp.view.fragment.FunctionFragment;
+import com.integrate.mingweidev.mvp.view.fragment.music.MusicFragment;
 import com.integrate.mingweidev.utils.AppMethod;
 import com.integrate.mingweidev.utils.BaseUtils;
 import com.integrate.mingweidev.utils.Constant;
@@ -114,7 +114,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         initMenu();
         fragmentManager = getSupportFragmentManager();
         switchFragment("功能");
-        initThemeToolBar("功能", false, R.drawable.ic_classify, leftlistener);
+        initThemeToolBar("音乐盒子", false, R.drawable.ic_classify, leftlistener);
     }
 
     private void initMenu() {
@@ -234,7 +234,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
             switch (name) {
                 case "功能":
 //                    foundFragment = BookClassifyFragment.newInstance();
-                    foundFragment = FunctionFragment.newInstance();
+                    foundFragment = MusicFragment.newInstance();
                     break;
                 case "书架":
 //                    foundFragment = BookShelfFragment.newInstance();

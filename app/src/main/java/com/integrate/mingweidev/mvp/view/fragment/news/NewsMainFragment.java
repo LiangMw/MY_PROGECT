@@ -13,7 +13,7 @@ import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
 import com.integrate.mingweidev.mvp.contract.CNewsList;
 import com.integrate.mingweidev.mvp.presenter.pnews.PNewsImpl;
-import com.integrate.mingweidev.mvp.view.adapter.news.NewsListAdapter;
+import com.integrate.mingweidev.mvp.view.adapter.ad_news.NewsListAdapter;
 import com.integrate.mingweidev.utils.LoadingHelper;
 import com.scwang.smartrefresh.layout.SmartRefreshLayout;
 import com.scwang.smartrefresh.layout.api.RefreshLayout;

@@ -1,6 +1,5 @@
 package com.integrate.mingweidev.mvp.view.fragment;
 
-import android.Manifest;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -17,13 +16,8 @@ import com.integrate.mingweidev.utils.AppMethod;
 import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.LoadingHelper;
 import com.integrate.mingweidev.utils.LogUtils;
-import com.integrate.mingweidev.utils.SnackBarUtils;
-import com.integrate.mingweidev.utils.ThemeUtils;
-import com.integrate.mingweidev.utils.imageload.ImageSelectManage;
 
 import butterknife.BindView;
-import me.weyye.hipermission.HiPermission;
-import me.weyye.hipermission.PermissionCallback;
 
 /**
  * Created by 梁明伟 on 2017/11/28.
@@ -91,58 +85,10 @@ public class FunctionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        if (!HiPermission.checkPermission(getActivity(), Manifest.permission.READ_EXTERNAL_STORAGE)) {
-                            HiPermission.create(getActivity())
-                                    .title("请允许以下权限")
-                                    .msg("为了收复钓鱼岛")
-                                    .style(R.style.AppTheme)
-                                    .filterColor(ThemeUtils.getThemeColor())
-                                    .animStyle(R.anim.popup_enter)
-                                    .checkSinglePermission(Manifest.permission.READ_EXTERNAL_STORAGE, new PermissionCallback() {
-                                        @Override
-                                        public void onClose() {
-                                            SnackBarUtils.makeShort(getActivity().getWindow().getDecorView(), "读写权限被禁止");
-                                        }
-
-                                        @Override
-                                        public void onFinish() {
-
-                                        }
-
-                                        @Override
-                                        public void onDeny(String permission, int position) {
-
-                                        }
-
-                                        @Override
-                                        public void onGuarantee(String permission, int position) {
-                                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
-                                        }
-                                    });
-                        } else {
-                            AppMethod.postShowForResult(FunctionFragment.this, CHOOSEFILE_CODE, FragmentPages.FILE_MANAGE);
-                        }
+                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
                         break;
                     case 1:
-//                        startActivity(BookActivity.class);
-//                        ToastUtils.show(names[i]);
-//                        LoadingHelper.getInstance().showLoading(getActivity());
-//                        new Thread(new Runnable() {
-//                            @Override
-//                            public void run() {
-//
-//                                try {
-//                                    Thread.sleep(5000);
-//                                    mhandler.sendEmptyMessage(1);
-//                                } catch (InterruptedException e) {
-//                                    e.printStackTrace();
-//                                }
-//                            }
-//                        }).start();
 
-//                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
-
-                        startActivity(ImageSelectManage.class);
                         break;
                     case 2:
                         AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);

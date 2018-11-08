@@ -1,11 +1,13 @@
-package com.integrate.mingweidev.mvp.view.adapter.news;
+package com.integrate.mingweidev.mvp.view.adapter.ad_news;
 
 import android.support.annotation.Nullable;
+import android.widget.ImageView;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.chad.library.adapter.base.BaseViewHolder;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
+import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
 
 import java.util.List;
 
@@ -28,8 +30,9 @@ public class NewsListAdapter extends BaseQuickAdapter<NewsListBean.FemaleBean, B
     protected void convert(BaseViewHolder helper, NewsListBean.FemaleBean item) {
         helper.setText(R.id.tv_name, item.getName())
                 .setText(R.id.tv_count, item.getBookCount() + "本");
+        ImageLoadManage.getInstance().display(mContext,(ImageView)helper.getView(R.id.iv_icon),"http://mallcomment.holdsoft.cn/1510224399351",-1,-1);
 
-//        Glide.with(mContext).load(Constant.BASE_URL+item.getIcon())
+//        Glide.with(mContext).load("http://mallcomment.holdsoft.cn/1510224399351")
 //                .apply(new RequestOptions().placeholder(R.drawable.ic_default))
 //                .into((ImageView) helper.getView(R.id.iv_icon));
     }
