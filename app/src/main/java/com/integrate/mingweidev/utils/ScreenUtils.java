@@ -1,10 +1,13 @@
 package com.integrate.mingweidev.utils;
 
+import android.content.Context;
 import android.content.res.Resources;
-import android.support.v7.app.AppCompatActivity;
+import android.support.v4.app.FragmentActivity;
 import android.util.DisplayMetrics;
 import android.util.TypedValue;
+import android.view.Display;
 import android.view.View;
+import android.view.WindowManager;
 
 import com.integrate.mingweidev.MYApplication;
 
@@ -56,12 +59,22 @@ public class ScreenUtils {
      * @param activity
      * @return
      */
-    public static int[] getScreenSize(AppCompatActivity activity) {
+    public static int[] getScreenSize(FragmentActivity activity) {
         int[] size = new int[2];
         View decorView = activity.getWindow().getDecorView();
         size[0] = decorView.getWidth();
         size[1] = decorView.getHeight();
         return size;
+    }
+    public static int getScreenWidth(Context context) {
+        DisplayMetrics dm = new DisplayMetrics();
+        //((Activity) context).getWindowManager().getDefaultDisplay().getMetrics(dm);
+
+        WindowManager wm = (WindowManager) context.getSystemService(Context.WINDOW_SERVICE);
+        Display display = wm.getDefaultDisplay();
+        display.getMetrics(dm);
+
+        return dm.widthPixels;
     }
 
     /**

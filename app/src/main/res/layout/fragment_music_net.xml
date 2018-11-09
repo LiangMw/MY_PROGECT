@@ -1,8 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<android.widget.LinearLayout
+<LinearLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".mvp.view.fragment.music.NetMusicFragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-</android.widget.LinearLayout>
+    <com.stx.xhb.xbanner.XBanner
+        android:id="@+id/banner"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:AutoPlayTime="3000"
+        app:isAutoPlay="false"
+        app:isHandLoop="true"
+        app:isShowIndicatorOnlyOne="true"
+        app:isShowNumberIndicator="false"
+        app:pageChangeDuration="800"
+        app:isClipChildrenMode="true"
+        app:pointsContainerBackground="@android:color/transparent"
+        app:pointsPosition="CENTER" />
+
+</LinearLayout>

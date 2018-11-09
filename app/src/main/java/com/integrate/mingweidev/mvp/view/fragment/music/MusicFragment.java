@@ -10,8 +10,6 @@ import android.view.ViewGroup;
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
-import com.integrate.mingweidev.mvp.contract.CMusic;
-import com.integrate.mingweidev.mvp.presenter.PMusicImpl;
 import com.integrate.mingweidev.mvp.view.MainActivity;
 import com.integrate.mingweidev.mvp.view.adapter.BaseViewPageAdapter;
 import com.integrate.mingweidev.mvp.view.fragment.FunctionFragment;
@@ -29,7 +27,7 @@ import butterknife.Unbinder;
  * @github https://github.com/LiangLuDev
  */
 
-public class MusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IVMusic {
+public class MusicFragment extends BaseFragment {
 
     @BindView(R.id.nts_classify)
     NavigationTabStrip ntsClassify;
@@ -46,21 +44,6 @@ public class MusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IV
     }
 
     @Override
-    public void showLoading() {
-
-    }
-
-    @Override
-    public void hideLoading() {
-
-    }
-
-    @Override
-    public void neterror() {
-
-    }
-
-    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         // TODO: inflate a fragment view
         View rootView = super.onCreateView(inflater, container, savedInstanceState);
@@ -73,9 +56,12 @@ public class MusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IV
         return R.layout.fragment_music;
     }
 
+    /**
+     * 创建presenter实例
+     */
     @Override
     public void createPresenter() {
-        mPresenter = new PMusicImpl(mContext, this);
+
     }
 
     @Override
@@ -108,4 +94,5 @@ public class MusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IV
         super.onDestroyView();
         unbinder.unbind();
     }
+
 }

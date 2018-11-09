@@ -83,7 +83,7 @@ public class DevMvpApi {
 
        return RxHttpUtils
                 .getSInstance()
-                .baseUrl("https://api.douban.com/")
+                .baseUrl("http://118.24.213.53:8080/jfinal_demo/music/getbanners")
 //                .addHeaders(headerMaps)
                 .cache(true)
                 .cachePath("cachePath", 1024 * 1024 * 100)

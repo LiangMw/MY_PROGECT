@@ -1,6 +1,7 @@
 package com.integrate.mingweidev.api;
 
 
+import com.integrate.mingweidev.mvp.bean.BannerBean;
 import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
 
@@ -24,5 +25,9 @@ public interface DevMvpService {
     //获取新闻列表
     @GET(Url.NEWS_LIST)
     Observable<NewsListBean> newsList(@Query("newsid") String newsid);
+
+    //获取轮播图
+    @GET("music/getbanners/")
+    Observable<BannerBean> bannerList();
 
 }
