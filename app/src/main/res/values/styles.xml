@@ -330,5 +330,5 @@
         <item name="PermissionBackround">@drawable/shape_bg_white</item>
         <item name="PermissionButtonTextColor">@android:color/white</item>
     </style>
-
+    <attr name="playBarBackground" format="reference" />
 </resources>

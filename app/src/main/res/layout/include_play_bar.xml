@@ -2,7 +2,7 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@+id/fl_play_bar"
     android:layout_width="match_parent"
-    android:layout_height="@dimen/play_bar_height"
+    android:layout_height="@dimen/dp_57"
     android:background="?attr/playBarBackground">
 
     <LinearLayout
@@ -20,7 +20,7 @@
             android:layout_height="45dp"
             android:contentDescription="@null"
             android:scaleType="fitXY"
-            android:src="@drawable/default_cover" />
+            android:src="@mipmap/default_cover" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,13 +32,12 @@
 
             <TextView
                 android:id="@+id/tv_play_bar_title"
-                style="@style/AppTheme.Text"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:ellipsize="end"
                 android:singleLine="true"
                 android:text="无音乐"
-                android:textSize="@dimen/text_size_common" />
+                android:textSize="@dimen/sp_16" />
 
             <TextView
                 android:id="@+id/tv_play_bar_artist"
@@ -62,14 +61,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/ic_play_bar_btn_next" />
+            android:src="@mipmap/ic_play_bar_btn_next" />
 
         <ImageView
             android:id="@+id/v_play_bar_playlist"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:contentDescription="@null"
-            android:src="@drawable/ic_play_bar_btn_playlist" />
+            android:src="@mipmap/ic_play_bar_btn_playlist" />
     </LinearLayout>
 
     <ProgressBar
