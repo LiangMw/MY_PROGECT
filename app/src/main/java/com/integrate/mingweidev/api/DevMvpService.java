@@ -10,6 +10,7 @@ import java.util.Map;
 
 import io.reactivex.Observable;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -35,7 +36,7 @@ public interface DevMvpService {
     Observable<BannerBean> bannerList();
 
     //获取歌曲列表
-    @GET()
+    @POST("restserver/ting/")
     Observable<OnlineMusicList> songList(@QueryMap Map<String,String> map);
 
 }
