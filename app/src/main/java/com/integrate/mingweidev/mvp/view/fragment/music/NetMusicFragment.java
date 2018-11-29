@@ -17,6 +17,7 @@ import com.integrate.mingweidev.mvp.contract.CMusic;
 import com.integrate.mingweidev.mvp.presenter.pmusic.PMusicImpl;
 import com.integrate.mingweidev.mvp.view.adapter.ad_music.MultipleItem;
 import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicListAdapter;
+import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.ScreenUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
 import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
@@ -97,8 +98,13 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
                 mSongLists.add(info);
             }
         }
-        musiclistadapter = new MusicListAdapter(datas);
-        rvClassify.setAdapter(musiclistadapter);
+        LogUtils.e("------mSongLists.size:"+mSongLists.size());
+        if(musiclistadapter == null) {
+            musiclistadapter = new MusicListAdapter(mSongLists);
+            rvClassify.setAdapter(musiclistadapter);
+        }else{
+            musiclistadapter.setNewData(mSongLists);
+        }
 
 
 //        mPresenter.getSongList();

@@ -5,13 +5,15 @@ package com.integrate.mingweidev.mvp.bean;
  * Copyright © 2018年 CETC. All rights reserved.
  */
 
+import com.chad.library.adapter.base.entity.MultiItemEntity;
+
 import java.io.Serializable;
 
 /**
  * 歌单信息
  * Created by wcy on 2015/12/20.
  */
-public class SheetInfo implements Serializable {
+public class SheetInfo implements Serializable,MultiItemEntity {
     private String title;
     /**
      * #主打榜单
@@ -83,5 +85,10 @@ public class SheetInfo implements Serializable {
 
     public void setMusic3(String music3) {
         this.music3 = music3;
+    }
+
+    @Override
+    public int getItemType() {
+        return type;
     }
 }
