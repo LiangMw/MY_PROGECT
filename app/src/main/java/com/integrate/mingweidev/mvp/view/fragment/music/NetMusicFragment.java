@@ -1,14 +1,22 @@
 package com.integrate.mingweidev.mvp.view.fragment.music;
 
+import android.os.Bundle;
+import android.support.v7.widget.RecyclerView;
+import android.view.LayoutInflater;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.BannerBean;
+import com.integrate.mingweidev.mvp.bean.OnlineMusicList;
+import com.integrate.mingweidev.mvp.bean.SheetInfo;
 import com.integrate.mingweidev.mvp.contract.CMusic;
 import com.integrate.mingweidev.mvp.presenter.pmusic.PMusicImpl;
+import com.integrate.mingweidev.mvp.view.adapter.ad_music.MultipleItem;
+import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicListAdapter;
 import com.integrate.mingweidev.utils.ScreenUtils;
 import com.integrate.mingweidev.utils.ToastUtils;
 import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
@@ -18,19 +26,26 @@ import java.util.ArrayList;
 import java.util.List;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
+import butterknife.Unbinder;
 
 /**
  * Created by 梁明伟 on 2018/11/8.
  * Copyright © 2018年 CETC. All rights reserved.
  * 网络歌曲
  */
-public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IVMusic{
+public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic.IVMusic {
 
     @BindView(R.id.banner)
     XBanner banner;
+    @BindView(R.id.rv_classify)
+    RecyclerView rvClassify;
+    Unbinder unbinder;
 
     List<BannerBean.ResultBean> data = new ArrayList<>();
-
+    private List<SheetInfo> mSongLists = new ArrayList<>();
+    private List<MultipleItem> datas = new ArrayList<>();
+    private MusicListAdapter musiclistadapter;
 
     @Override
     public void onResume() {
@@ -59,7 +74,7 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
      */
     @Override
     public void createPresenter() {
-        mPresenter = new PMusicImpl(mContext,this);
+        mPresenter = new PMusicImpl(mContext, this);
     }
 
 
@@ -71,6 +86,22 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
         banner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(getActivity()) / 2));
         initBanner();
         mPresenter.getbanners();
+
+        if (mSongLists.isEmpty()||mSongLists.size()<1) {
+            String[] titles = getResources().getStringArray(R.array.online_music_list_title);
+            String[] types = getResources().getStringArray(R.array.online_music_list_type);
+            for (int i = 0; i < titles.length; i++) {
+                SheetInfo info = new SheetInfo();
+                info.setType(types[i].equals("#")?MultipleItem.TYPE_PROFILE:MultipleItem.TYPE_MUSIC_LIST);
+                info.setTitle(titles[i]);
+                mSongLists.add(info);
+            }
+        }
+        musiclistadapter = new MusicListAdapter(datas);
+        rvClassify.setAdapter(musiclistadapter);
+
+
+//        mPresenter.getSongList();
     }
 
     /**
@@ -98,13 +129,23 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
 
     @Override
     public void getbannerSuccess(BannerBean bannerBean) {
-        data =  bannerBean.getResult();
+        data = bannerBean.getResult();
         banner.setAutoPlayAble(data.size() > 1);
         banner.setData(data, null);
     }
 
     @Override
     public void getbannererror(String reason) {
+
+    }
+
+    @Override
+    public void getsonglistSuccess(OnlineMusicList onlineMusicList) {
+
+    }
+
+    @Override
+    public void getsonglisterror(String reason) {
 
     }
 
@@ -121,5 +162,19 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
     @Override
     public void neterror() {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

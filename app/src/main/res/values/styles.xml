@@ -331,4 +331,5 @@
         <item name="PermissionButtonTextColor">@android:color/white</item>
     </style>
     <attr name="playBarBackground" format="reference" />
+    <style name="AppTheme.Text" parent="TextAppearance.AppCompat" />
 </resources>

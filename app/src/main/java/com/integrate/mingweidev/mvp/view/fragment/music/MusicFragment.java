@@ -6,10 +6,6 @@ import android.support.v4.view.ViewPager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.FrameLayout;
-import android.widget.ImageView;
-import android.widget.ProgressBar;
-import android.widget.TextView;
 
 import com.gigamole.navigationtabstrip.NavigationTabStrip;
 import com.integrate.mingweidev.R;
@@ -38,22 +34,22 @@ public class MusicFragment extends BaseFragment {
     @BindView(R.id.vp_classify)
     ViewPager vpClassify;
     String[] titles = {"网络歌曲", "本地歌曲"};
-    @BindView(R.id.iv_play_bar_cover)
-    ImageView ivPlayBarCover;
-    @BindView(R.id.tv_play_bar_title)
-    TextView tvPlayBarTitle;
-    @BindView(R.id.tv_play_bar_artist)
-    TextView tvPlayBarArtist;
-    @BindView(R.id.iv_play_bar_play)
-    ImageView ivPlayBarPlay;
-    @BindView(R.id.iv_play_bar_next)
-    ImageView ivPlayBarNext;
-    @BindView(R.id.v_play_bar_playlist)
-    ImageView vPlayBarPlaylist;
-    @BindView(R.id.pb_play_bar)
-    ProgressBar pbPlayBar;
-    @BindView(R.id.fl_play_bar)
-    FrameLayout flPlayBar;
+//    @BindView(R.id.iv_play_bar_cover)
+//    ImageView ivPlayBarCover;
+//    @BindView(R.id.tv_play_bar_title)
+//    TextView tvPlayBarTitle;
+//    @BindView(R.id.tv_play_bar_artist)
+//    TextView tvPlayBarArtist;
+//    @BindView(R.id.iv_play_bar_play)
+//    ImageView ivPlayBarPlay;
+//    @BindView(R.id.iv_play_bar_next)
+//    ImageView ivPlayBarNext;
+//    @BindView(R.id.v_play_bar_playlist)
+//    ImageView vPlayBarPlaylist;
+//    @BindView(R.id.pb_play_bar)
+//    ProgressBar pbPlayBar;
+//    @BindView(R.id.fl_play_bar)
+//    FrameLayout flPlayBar;
     Unbinder unbinder;
     private List<Fragment> mFragments = new ArrayList<>();
 
