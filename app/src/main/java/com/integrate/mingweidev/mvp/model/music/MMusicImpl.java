@@ -1,5 +1,7 @@
 package com.integrate.mingweidev.mvp.model.music;
 
+import android.os.Build;
+
 import com.allen.library.RxHttpUtils;
 import com.allen.library.cookie.store.MemoryCookieStore;
 import com.integrate.mingweidev.api.DevMvpService;
@@ -8,6 +10,7 @@ import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.rxhelper.RxObservable;
 import com.integrate.mingweidev.utils.rxhelper.RxTransformer;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -19,6 +22,7 @@ import java.util.Map;
 
 public class MMusicImpl extends BaseModel {
 
+    private HashMap<String,Object> headerMaps = new HashMap<>();
 
     public void getBanner(RxObservable observable) {
 
@@ -42,11 +46,12 @@ public class MMusicImpl extends BaseModel {
     }
 
     public void getSongList(RxObservable observable, Map<String,String> param) {
-
+        headerMaps.clear();
+        headerMaps.put("User-Agent", Build.MODEL+"/"+Build.VERSION.RELEASE);
         RxHttpUtils
                 .getSInstance()
                 .baseUrl(Constant.BASE_URL)
-//                .addHeaders(headerMaps)
+                .addHeaders(headerMaps)
                 .cache(true)
                 .cachePath("cachePath", 1024 * 1024 * 100)
                 .sslSocketFactory()

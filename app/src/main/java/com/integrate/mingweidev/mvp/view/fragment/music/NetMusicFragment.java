@@ -43,6 +43,7 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
     @BindView(R.id.rv_classify)
     RecyclerView rvClassify;
     Unbinder unbinder;
+    String b;
 
     List<BannerBean.ResultBean> data = new ArrayList<>();
     private List<SheetInfo> mSongLists = new ArrayList<>();
@@ -99,6 +100,7 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
                 mSongLists.add(info);
             }
         }
+
         if(musiclistadapter == null) {
             musiclistadapter = new MusicListAdapter(getActivity(),mSongLists);
             rvClassify.setLayoutManager(new LinearLayoutManager(mContext));
