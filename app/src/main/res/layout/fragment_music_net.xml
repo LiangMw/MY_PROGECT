@@ -20,6 +20,7 @@
         app:pageChangeDuration="800"
         app:isClipChildrenMode="true"
         app:pointsContainerBackground="@android:color/transparent"
+        android:visibility="gone"
         app:pointsPosition="CENTER" />
 
     <android.support.v7.widget.RecyclerView

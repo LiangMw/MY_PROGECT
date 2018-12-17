@@ -30,6 +30,14 @@ public class Constant {
 
     //文件选择回带结果
     public static String TAG_FILERESULT = "fragment_files";
+    //音乐列表类型
+    public static String MUSIC_LIST_TYPE = "music_list_type";
+
+    /*****************RecyclerView多类型*******************/
+    //音乐列表文字类型
+    public static final int TYPE_PROFILE = 0;
+    //音乐列表分类类型
+    public static final int TYPE_MUSIC_LIST = 1;
 
 
     /****************联网参数***********************/

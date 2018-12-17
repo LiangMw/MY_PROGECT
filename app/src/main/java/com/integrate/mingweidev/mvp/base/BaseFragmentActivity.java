@@ -51,6 +51,7 @@ public class BaseFragmentActivity extends AppCompatActivity {
     @BindView(R.id.container)
     FrameLayout container;
 
+
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -273,6 +274,10 @@ public class BaseFragmentActivity extends AppCompatActivity {
 
     public void setRightVisable(boolean visable) {
         ivToolbarMore.setVisibility(visable ? View.VISIBLE : View.GONE);
+    }
+
+    public void setTitleVisable(boolean visable) {
+        crl.setVisibility(visable ? View.VISIBLE : View.GONE);
     }
 
     @OnClick({R.id.iv_toolbar_back, R.id.iv_toolbar_more})

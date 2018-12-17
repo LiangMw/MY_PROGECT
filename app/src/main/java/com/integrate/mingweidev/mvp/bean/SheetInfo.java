@@ -33,11 +33,20 @@ public class SheetInfo implements Serializable,MultiItemEntity {
      * 18.Hito中文榜
      * 7.叱咤歌曲榜
      */
-    private int type;
+    private String type;
+    private int itemtype;
     private String coverUrl;
     private String music1;
     private String music2;
     private String music3;
+
+    public int getItemtype() {
+        return itemtype;
+    }
+
+    public void setItemtype(int itemtype) {
+        this.itemtype = itemtype;
+    }
 
     public String getTitle() {
         return title;
@@ -47,11 +56,11 @@ public class SheetInfo implements Serializable,MultiItemEntity {
         this.title = title;
     }
 
-    public int getType() {
+    public String getType() {
         return type;
     }
 
-    public void setType(int type) {
+    public void setType(String type) {
         this.type = type;
     }
 
@@ -89,6 +98,6 @@ public class SheetInfo implements Serializable,MultiItemEntity {
 
     @Override
     public int getItemType() {
-        return type;
+        return itemtype;
     }
 }

@@ -30,4 +30,13 @@ public interface CMusic {
         void getsonglisterror(String reason);
 
     }
+
+    interface IPTypeMusic extends IBasePresenter{
+        void  getSongList();
+    }
+
+    interface IVTypeMusic extends IBaseView{
+        void getSongListSuccess(OnlineMusicList Bean);
+        void getSongListError(String resson);
+    }
 }

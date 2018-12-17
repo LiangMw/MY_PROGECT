@@ -34,7 +34,7 @@ public interface DevMvpService {
     @GET("music/getbanners/")
     Observable<BannerBean> bannerList();
 
-    //获取歌曲列表
+    //获取歌曲类型列表
     @GET("restserver/ting/")
     Observable<OnlineMusicList> songList(@QueryMap Map<String,String> map);
 

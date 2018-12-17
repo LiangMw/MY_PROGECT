@@ -67,4 +67,8 @@
     <string name="searchfile">检索文件</string>
 
 
+    <string name="song_list_item_title_1">1.%1$s - %2$s</string>
+    <string name="song_list_item_title_2">2.%1$s - %2$s</string>
+    <string name="song_list_item_title_3">3.%1$s - %2$s</string>
+
 </resources>

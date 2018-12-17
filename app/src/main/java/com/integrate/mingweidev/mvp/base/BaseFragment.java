@@ -85,11 +85,13 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
     }
 
     public void changeStyle() {
+        setTitleVisible(mActionBarRes.titleBarVisible);
         setTitle(mActionBarRes.mTitle);
         setBackIcon(mActionBarRes.leftPic);
         setRightIcon(mActionBarRes.rightPic);
         setRightVisible(mActionBarRes.rightVisible);
     }
+
 
     public void setTitle(String title) {
         if (subActivity != null) {
@@ -115,6 +117,14 @@ public abstract class BaseFragment<T extends BasePresenter> extends Fragment {
             subActivity.setRightVisable(visible);
         }
     }
+
+    public void setTitleVisible(boolean visible) {
+        if (subActivity != null) {
+            subActivity.setTitleVisable(visible);
+        }
+    }
+
+
 
     /**
      * 传入布局文件

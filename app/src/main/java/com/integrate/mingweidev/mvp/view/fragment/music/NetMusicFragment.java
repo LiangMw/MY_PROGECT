@@ -7,7 +7,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
 import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.integrate.mingweidev.R;
@@ -17,9 +16,8 @@ import com.integrate.mingweidev.mvp.bean.OnlineMusicList;
 import com.integrate.mingweidev.mvp.bean.SheetInfo;
 import com.integrate.mingweidev.mvp.contract.CMusic;
 import com.integrate.mingweidev.mvp.presenter.pmusic.PMusicImpl;
-import com.integrate.mingweidev.mvp.view.adapter.ad_music.MultipleItem;
-import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicListAdapter;
-import com.integrate.mingweidev.utils.ScreenUtils;
+import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicTypeListAdapter;
+import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.ToastUtils;
 import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
 import com.stx.xhb.xbanner.XBanner;
@@ -47,8 +45,7 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
 
     List<BannerBean.ResultBean> data = new ArrayList<>();
     private List<SheetInfo> mSongLists = new ArrayList<>();
-    private List<MultipleItem> datas = new ArrayList<>();
-    private MusicListAdapter musiclistadapter;
+    private MusicTypeListAdapter musiclistadapter;
 
     @Override
     public void onResume() {
@@ -86,23 +83,24 @@ public class NetMusicFragment extends BaseFragment<PMusicImpl> implements CMusic
      */
     @Override
     protected void initView() {
-        banner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(getActivity()) / 2));
-        initBanner();
-        mPresenter.getbanners();
+//        banner.setLayoutParams(new LinearLayout.LayoutParams(LinearLayout.LayoutParams.MATCH_PARENT, ScreenUtils.getScreenWidth(getActivity()) / 2));
+//        initBanner();
+//        mPresenter.getbanners();
 
         if (mSongLists.isEmpty()||mSongLists.size()<1) {
             String[] titles = getResources().getStringArray(R.array.online_music_list_title);
             String[] types = getResources().getStringArray(R.array.online_music_list_type);
             for (int i = 0; i < titles.length; i++) {
                 SheetInfo info = new SheetInfo();
-                info.setType(types[i].equals("#")?MultipleItem.TYPE_PROFILE:MultipleItem.TYPE_MUSIC_LIST);
+                info.setItemtype(types[i].equals("#")? Constant.TYPE_PROFILE:Constant.TYPE_MUSIC_LIST);
+                info.setType(types[i]);
                 info.setTitle(titles[i]);
                 mSongLists.add(info);
             }
         }
 
         if(musiclistadapter == null) {
-            musiclistadapter = new MusicListAdapter(getActivity(),mSongLists);
+            musiclistadapter = new MusicTypeListAdapter(getActivity(),mSongLists);
             rvClassify.setLayoutManager(new LinearLayoutManager(mContext));
             musiclistadapter.openLoadAnimation(BaseQuickAdapter.SLIDEIN_LEFT);
             rvClassify.setAdapter(musiclistadapter);
