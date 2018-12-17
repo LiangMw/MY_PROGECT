@@ -74,9 +74,10 @@ public class ImageLoadManage implements ComponentCallbacks2 {
     public void display(Context context, ImageView imageView, String url, int processid, int errorid, boolean isround) {
 
         RequestOptions options = new RequestOptions();
-        options.diskCacheStrategy(DiskCacheStrategy.NONE);
-        options.skipMemoryCache(true);
+        options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        options.skipMemoryCache(false);
         options.placeholder(processid != -1 ? processid : errorid != -1 ? errorid : R.mipmap.icon_placehoder);
+        options.dontAnimate();
         if (isround) {
             options.transform(new CircleCrop());
         }
@@ -126,10 +127,11 @@ public class ImageLoadManage implements ComponentCallbacks2 {
     public void display(Context context, ImageView imageView, String url, int processid, int errorid, Transformation transformation) {
 
         RequestOptions options = new RequestOptions();
-        options.diskCacheStrategy(DiskCacheStrategy.NONE);
-        options.skipMemoryCache(true);
+        options.diskCacheStrategy(DiskCacheStrategy.ALL);
+        options.skipMemoryCache(false);
         options.placeholder(processid != -1 ? processid : errorid != -1 ? errorid : R.mipmap.icon_placehoder);
         options.transform(transformation);
+        options.dontAnimate();
         Glide.with(context).load(url)
                 .apply(options)
                 .into(imageView);
