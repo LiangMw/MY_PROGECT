@@ -1,6 +1,7 @@
 package com.example.javatest.main;
 
 
+import com.example.javatest.sort.HeapSort;
 import com.example.javatest.sort.NewQuickSort;
 
 import java.util.Random;
@@ -17,7 +18,7 @@ public class MyClass {
         int[] array2;
         long begin = System.currentTimeMillis();
 //        array = generateArray(6);
-        array2 = generateArray(10000000);
+        array2 = generateArray(100000);
 //        printArray(array2);
 
         array = new int[array2.length];
@@ -31,24 +32,28 @@ public class MyClass {
 
         NewQuickSort newQuickSort = new NewQuickSort();
 
+        HeapSort heapSort = new HeapSort();
+
         System.out.println("quickSort_W排序后：");
         begin = System.currentTimeMillis();
 //        new MergeSort().mergeSort(array);
         newQuickSort.quickSort_W(array);
         end = System.currentTimeMillis();
         CountTime("quickSort_W:useTime:", begin, end);
+        System.out.println("quickSort_W---changeTime:"+newQuickSort.changeTime);
+
 //        printArray(array)
 
         System.out.println();
         System.out.println();
-        System.out.println();
 
-        System.out.println("quickSort_A排序后：");
+        System.out.println("heapSort排序后：");
         begin = System.currentTimeMillis();
 //        new MergeSort().mergeSort(array);
-        newQuickSort.quickSort_A(array2);
+        heapSort.sort(array2,array2.length-1);
         end = System.currentTimeMillis();
-        CountTime("quickSort_A:useTime:", begin, end);
+        CountTime("heapSort:useTime:", begin, end);
+        System.out.println("heapSort---changeTime:"+heapSort.changeTime);
 //        printArray(array2);
 
 

@@ -5,8 +5,10 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.text.TextUtils;
 
 import com.integrate.mingweidev.mvp.base.BaseFragmentActivity;
+import com.integrate.mingweidev.mvp.view.LoginActivity;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
 
 import me.weyye.hipermission.HiPermission;
@@ -19,6 +21,9 @@ import static android.content.Intent.FLAG_ACTIVITY_CLEAR_TOP;
  * Copyright © 2018年 CETC. All rights reserved.
  */
 public class AppMethod {
+
+    private static String guid;
+    private static String token;
 
     /**
      * 跳转到simplebackactivity(不带回调的启动)
@@ -63,16 +68,18 @@ public class AppMethod {
 
     /**
      * activity跳转到SimpleBackActivity时，只能使用该方法跳转(带回调的启动)
+     *
      * @param code 启动码
      * @param page 要显示的Fragment
      */
     public static void postShowForResult(Activity activity, int code,
                                          FragmentPages page) {
-        postShowForResult(activity,code,page,new Bundle());
+        postShowForResult(activity, code, page, new Bundle());
     }
 
     /**
      * activity跳转到SimpleBackActivity时，只能使用该方法跳转(带回调的启动)
+     *
      * @param code 启动码
      * @param page 要显示的Fragment
      * @param data 传递的Bundle数据
@@ -107,7 +114,74 @@ public class AppMethod {
         fragment.startActivityForResult(intent, code);
     }
 
-    public void getPermissions(Activity activity){
+    public static void getPermission(Activity activity) {
+
+//        List<PermissonItem> permissonItems = new ArrayList<PermissonItem>();
+//        permissonItems.add(new PermissonItem(Manifest.permission.CAMERA, "照相机", R.drawable.permission_ic_memory));
+//        permissonItems.add(new PermissonItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
+//        HiPermission.create(activity)
+//                .permissions(permissonItems)
+//                .checkMutiPermission(...);
+
+    }
+
+    /**
+     * 获取guid
+     *
+     * @return
+     */
+    public static String getGuid() {
+        if (TextUtils.isEmpty(Constant.GUID))
+            Constant.GUID = SharedPreUtils.getInstance().getString(Constant.TAG_GUID, "");
+        return guid;
+    }
+
+    /**
+     * 获取guid
+     *
+     * @param url
+     * @return
+     */
+    public static String getSign(String url,String token) {
+        String sign = "";
+        String[] arr_urls = url.split("/");
+        if (arr_urls.length <= 0) {
+            return sign;
+        }
+        int len = arr_urls.length;
+        if (len < 2) {
+            return sign;
+        }
+        String str = "/" + arr_urls[len - 2] + "/" + arr_urls[len - 1] + "?" + "token=" + token;
+        try {
+            sign = MD5Utils.encrypt(str);
+            return sign;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "";
+        }
+    }
+
+    public static void goLogin(Activity mActivity){
+        Intent intent = new Intent(mActivity, LoginActivity.class);
+        mActivity.startActivity(intent);
+        SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_TOKEN);
+        SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_GUID);
+        mActivity.finish();
+    }
+
+    /**
+     * 获取guid
+     *
+     * @return
+     */
+    public static String getToken() {
+        if (TextUtils.isEmpty(Constant.TOKEN))
+            Constant.TOKEN = SharedPreUtils.getInstance().getString(Constant.TAG_TOKEN, "");
+        return token;
+    }
+
+    public void getPermissions(Activity activity) {
 
         HiPermission.create(activity)
                 .checkMutiPermission(new PermissionCallback() {
@@ -133,14 +207,5 @@ public class AppMethod {
 
     }
 
-    public static void getPermission(Activity activity){
 
-//        List<PermissonItem> permissonItems = new ArrayList<PermissonItem>();
-//        permissonItems.add(new PermissonItem(Manifest.permission.CAMERA, "照相机", R.drawable.permission_ic_memory));
-//        permissonItems.add(new PermissonItem(Manifest.permission.ACCESS_FINE_LOCATION, "定位", R.drawable.permission_ic_location));
-//        HiPermission.create(activity)
-//                .permissions(permissonItems)
-//                .checkMutiPermission(...);
-
-    }
 }

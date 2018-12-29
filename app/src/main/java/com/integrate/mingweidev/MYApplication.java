@@ -12,7 +12,6 @@ import com.allen.library.config.OkHttpConfig;
 import com.allen.library.cookie.store.SPCookieStore;
 import com.integrate.mingweidev.api.BasicParamsInterceptor;
 import com.integrate.mingweidev.utils.Constant;
-import com.integrate.mingweidev.utils.LogUtils;
 import com.integrate.mingweidev.utils.SharedPreUtils;
 import com.integrate.mingweidev.utils.ThemeUtils;
 import com.integrate.mingweidev.widget.CircleHeader;
@@ -39,6 +38,7 @@ public class MYApplication extends Application {
     private static MYApplication app;
     private Map<String, String> baseparam = new HashMap<>();
     private String CachePath="";
+    private int a=0;
 
     public static Context getAppContext() {
         return app;
@@ -108,9 +108,7 @@ public class MYApplication extends Application {
     }
 
     private void initRxHttpUtils() {
-        Map<String, String> baseparam = new HashMap<>();
-        baseparam.put("guid", "454654564564465");
-        baseparam.put("token", "fjaksjfkjasljf");
+        baseparam.put("p", (a++)+"");
         /**
          * 初始化配置
          */

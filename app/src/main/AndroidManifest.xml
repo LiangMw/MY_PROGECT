@@ -27,7 +27,7 @@
         android:allowBackup="true"
         android:theme="@style/CyanTheme">
 
-        <activity android:name=".mvp.view.MainActivity">
+        <activity android:name=".mvp.view.WelcomActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN"/>
                 <category android:name="android.intent.category.LAUNCHER"/>
@@ -54,6 +54,12 @@
             android:screenOrientation="portrait" />
         <activity
             android:name=".mvp.view.activity.BookActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.MainActivity"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name=".mvp.view.LoginActivity"
             android:screenOrientation="portrait" />
 
     </application>

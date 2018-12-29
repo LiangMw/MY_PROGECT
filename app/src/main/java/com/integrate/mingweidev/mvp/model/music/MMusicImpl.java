@@ -6,7 +6,6 @@ import com.allen.library.RxHttpUtils;
 import com.allen.library.cookie.store.MemoryCookieStore;
 import com.integrate.mingweidev.api.DevMvpService;
 import com.integrate.mingweidev.mvp.base.BaseModel;
-import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.rxhelper.RxObservable;
 import com.integrate.mingweidev.utils.rxhelper.RxTransformer;
 
@@ -50,7 +49,7 @@ public class MMusicImpl extends BaseModel {
         headerMaps.put("User-Agent", Build.MODEL+"/"+Build.VERSION.RELEASE);
         RxHttpUtils
                 .getSInstance()
-                .baseUrl(Constant.BASE_URL)
+                .baseUrl("http://tingapi.ting.baidu.com/v1/")
                 .addHeaders(headerMaps)
                 .cache(true)
                 .cachePath("cachePath", 1024 * 1024 * 100)

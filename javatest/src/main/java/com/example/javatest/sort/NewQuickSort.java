@@ -7,6 +7,7 @@ package com.example.javatest.sort;
  */
 public class NewQuickSort {
 
+    public int changeTime = 0;
 
     public void quickSort_W(int[] a) {
         if(a ==null || a.length<1) {
@@ -14,6 +15,7 @@ public class NewQuickSort {
         }
 
         int n = a.length;
+        changeTime = 0;
         quicksort_c(a, 0, n-1);
 //        parttion(a,0,n-1);
     }
@@ -56,6 +58,7 @@ public class NewQuickSort {
                 int temp = a[i];
                 a[i] = a[j];
                 a[j] =temp;
+                changeTime ++;
 
             }
 
@@ -97,7 +100,6 @@ public class NewQuickSort {
                 a[j] =temp;
 
             }
-
 
         }
 

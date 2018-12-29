@@ -2,6 +2,10 @@ package com.integrate.mingweidev.api;
 
 import android.text.TextUtils;
 
+import com.integrate.mingweidev.utils.AppMethod;
+import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.LogUtils;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,6 +35,8 @@ public class BasicParamsInterceptor implements Interceptor {
     Map<String, String> headerParamsMap = new HashMap<>(); // 公共 Headers 添加
     List<String> headerLinesList = new ArrayList<>(); // 消息头 集合形式，一次添加一行  示例： 添加公共消息头  "X-Ping: Pong"
 
+    private static String requesurl = null;
+
     // 私有构造器
     private BasicParamsInterceptor() {
     }
@@ -38,6 +44,8 @@ public class BasicParamsInterceptor implements Interceptor {
     @Override
     public Response intercept(Chain chain) throws IOException {
         Request request = chain.request();
+        requesurl = request.url()+"";
+        LogUtils.e("----------request-:"+request.url());
         Request.Builder requestBuilder = request.newBuilder();
 
         // process header params inject
@@ -63,6 +71,8 @@ public class BasicParamsInterceptor implements Interceptor {
 
         // process queryParams inject whatever it's GET or POST
         if (queryParamsMap.size() > 0) {
+            queryParamsMap.put("sign", AppMethod.getSign(requesurl,(TextUtils.isEmpty(Constant.TOKEN)?AppMethod.getToken():Constant.TOKEN)));
+            queryParamsMap.put("guid", TextUtils.isEmpty(Constant.GUID)?AppMethod.getGuid():Constant.GUID);
             request = injectParamsIntoUrl(request.url().newBuilder(), requestBuilder, queryParamsMap);
         }
 
