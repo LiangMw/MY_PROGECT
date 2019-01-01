@@ -1,10 +1,13 @@
 package com.integrate.mingweidev.api;
 
 
+import com.integrate.mingweidev.mvp.base.BaseResponse;
 import com.integrate.mingweidev.mvp.bean.BannerBean;
 import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
 import com.integrate.mingweidev.mvp.bean.OnlineMusicList;
+import com.integrate.mingweidev.mvp.bean.TokenBean;
+import com.integrate.mingweidev.mvp.bean.UserInfoBean;
 
 import java.util.Map;
 
@@ -20,6 +23,15 @@ import retrofit2.http.QueryMap;
 
 public interface DevMvpService {
 
+    @GET(Url.LOGIN)
+    Observable<TokenBean> login(@Query("tel") String tel, @Query("pwd") String pwd);
+
+    @GET(Url.REGISTER)
+    Observable<BaseResponse> register(@Query("tel") String tel, @Query("pwd") String pwd);
+
+    @GET(Url.USERINFO)
+    Observable<UserInfoBean> userinfo();
+
     @GET(Url.BOOK_CLASSIFY + "/{bookId}")
     Observable<BookBean> bookClassify(@Path("bookId") String bookId);
 
@@ -34,8 +46,8 @@ public interface DevMvpService {
     @GET("music/getbanners/")
     Observable<BannerBean> bannerList();
 
-    //获取歌曲列表
-    @GET()
-    Observable<OnlineMusicList> songList(@QueryMap Map<String,String> map);
+    //获取歌曲类型列表
+    @GET("restserver/ting/")
+    Observable<OnlineMusicList> songList(@QueryMap Map<String, String> map);
 
 }

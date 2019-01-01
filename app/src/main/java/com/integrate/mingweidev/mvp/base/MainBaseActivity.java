@@ -39,6 +39,7 @@ public class MainBaseActivity extends AppCompatActivity {
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
             setTranslucentStatus(true);
         }
+        mContext = this;
         onPreCreate();
     }
 

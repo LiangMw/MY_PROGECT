@@ -14,6 +14,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.AppCompatImageView;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
@@ -26,6 +27,10 @@ import com.integrate.mingweidev.MYApplication;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.MainBaseActivity;
 import com.integrate.mingweidev.mvp.bean.MainMenuBean;
+import com.integrate.mingweidev.mvp.bean.UserInfoBean;
+import com.integrate.mingweidev.mvp.contract.CLogin;
+import com.integrate.mingweidev.mvp.model.login.MLogin;
+import com.integrate.mingweidev.mvp.presenter.login.PLogin;
 import com.integrate.mingweidev.mvp.view.adapter.MainMenuAdapter;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
 import com.integrate.mingweidev.mvp.view.fragment.music.MusicFragment;
@@ -52,7 +57,7 @@ import butterknife.OnClick;
 import me.weyye.hipermission.HiPermission;
 import me.weyye.hipermission.PermissionCallback;
 
-public class MainActivity extends MainBaseActivity implements ColorChooserDialog.ColorCallback {
+public class MainActivity extends MainBaseActivity implements ColorChooserDialog.ColorCallback, CLogin.IVLogin<UserInfoBean> {
 
     @BindView(R.id.iv_avatar)
     ImageView mIvAvatar;
@@ -87,6 +92,8 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
     private FragmentManager fragmentManager;
     private String currentFragmentTag;
     private int CHOOSEFILE_CODE = 10001;
+    private PLogin pLogin;
+    private boolean islogin = false;
     private View.OnClickListener leftlistener = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
@@ -99,12 +106,6 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
 
         }
     };
-
-    @Override
-    protected void onResume() {
-        super.onResume();
-        ImageLoadManage.getInstance().display(this,mIvAvatar,"http://mallcomment.holdsoft.cn/1510224399351",true);
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -285,6 +286,11 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
                 } else {
                     startActivity(UserInfoActivity.class);
                 }*/
+                if (!islogin) {
+                    AppMethod.goLogin(this);
+                } else {
+                    //进入个人信息
+                }
                 break;
             case R.id.tv_theme:
                 new ColorChooserDialog.Builder(this, R.string.theme)
@@ -301,12 +307,16 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
                 } else {
                     startActivity(SettingActivity.class);
                 }*/
+                islogin = false;
+                AppMethod.goLogin(this);
                 break;
             case R.id.iv_toolbar_back:
                 mResideLayout.openPane();
                 break;
+
         }
     }
+
 
     @Override
     public void onColorSelection(@NonNull ColorChooserDialog dialog, int selectedColor) {
@@ -411,7 +421,6 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
         }
     }
 
-
     /**
      * 菜单是否可左滑
      *
@@ -447,5 +456,58 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
                 fristTime = System.currentTimeMillis();
             }
         }
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        String guid = SharedPreUtils.getInstance().getString(Constant.TAG_GUID, "");
+        String token = SharedPreUtils.getInstance().getString(Constant.TAG_TOKEN, "");
+        if (TextUtils.isEmpty(token) || TextUtils.isEmpty(guid)) {
+            //去登录的Activity
+//            startActivity(LoginActivity.class);
+            mTvDesc.setText("未登录");
+            ImageLoadManage.getInstance().display(this, mIvAvatar, "http://mallcomment.holdsoft.cn/1510224399351", true);
+        } else {
+            if (pLogin == null) {
+                pLogin = new PLogin(this, this, new MLogin());
+                pLogin.getuserinfo(guid);
+            }else{
+                pLogin.getuserinfo(guid);
+            }
+        }
+    }
+
+    @Override
+    public void showLoading() {
+
+    }
+
+    @Override
+    public void hideLoading() {
+
+    }
+
+    @Override
+    public void neterror() {
+
+    }
+
+    @Override
+    public void success(UserInfoBean bean) {
+        if (Constant.SUCCESSCODE.equals(bean.getCode())) {
+            mTvDesc.setText(bean.getResult().getUsername());
+            ImageLoadManage.getInstance().display(this, mIvAvatar, bean.getResult().getFacepic(), true);
+            islogin = true;
+        }else {
+            SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_TOKEN);
+            SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_GUID);
+        }
+    }
+
+    @Override
+    public void error(String msg) {
+        SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_TOKEN);
+        SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_GUID);
     }
 }
