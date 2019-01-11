@@ -19,6 +19,8 @@ public class Constant {
     public static  String TOKEN = "";
     public static  String GUID = "";
 
+    public static String picpath;
+
     //联网返回Code
 
     //成功

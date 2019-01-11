@@ -294,7 +294,9 @@ public class FilesCategoryFragment extends BasesFileFragment {
                     if (!file.exists()) continue;
 
                     s += "||||File:" + file.getAbsolutePath() + "--" + file.getName();
-                    LogUtils.e("---选择文件--File:" + file.getAbsolutePath() + "--" + file.getName());
+                    LogUtils.e("---选择文件--File:" + file.getPath() + "--" + file.getName());
+                    Constant.picpath = file.getPath();
+
                 }
 
                 //这里是带回的信息，以后可以直接用了

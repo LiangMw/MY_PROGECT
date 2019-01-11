@@ -33,7 +33,7 @@ import com.integrate.mingweidev.mvp.model.login.MLogin;
 import com.integrate.mingweidev.mvp.presenter.login.PLogin;
 import com.integrate.mingweidev.mvp.view.adapter.MainMenuAdapter;
 import com.integrate.mingweidev.mvp.view.fragment.FragmentPages;
-import com.integrate.mingweidev.mvp.view.fragment.music.MusicFragment;
+import com.integrate.mingweidev.mvp.view.fragment.FunctionFragment;
 import com.integrate.mingweidev.utils.AppMethod;
 import com.integrate.mingweidev.utils.BaseUtils;
 import com.integrate.mingweidev.utils.Constant;
@@ -235,7 +235,8 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
             switch (name) {
                 case "功能":
 //                    foundFragment = BookClassifyFragment.newInstance();
-                    foundFragment = MusicFragment.newInstance();
+//                    foundFragment = MusicFragment.newInstance();
+                    foundFragment = FunctionFragment.newInstance();
                     break;
                 case "书架":
 //                    foundFragment = BookShelfFragment.newInstance();
@@ -472,7 +473,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
             if (pLogin == null) {
                 pLogin = new PLogin(this, this, new MLogin());
                 pLogin.getuserinfo(guid);
-            }else{
+            } else {
                 pLogin.getuserinfo(guid);
             }
         }
@@ -499,7 +500,7 @@ public class MainActivity extends MainBaseActivity implements ColorChooserDialog
             mTvDesc.setText(bean.getResult().getUsername());
             ImageLoadManage.getInstance().display(this, mIvAvatar, bean.getResult().getFacepic(), true);
             islogin = true;
-        }else {
+        } else {
             SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_TOKEN);
             SharedPreUtils.getInstance().sharedPreRemove(Constant.TAG_GUID);
         }

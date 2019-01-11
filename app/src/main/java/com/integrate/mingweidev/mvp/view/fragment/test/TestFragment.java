@@ -11,11 +11,18 @@ import android.widget.TextView;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.BookBean;
+import com.integrate.mingweidev.mvp.bean.PicBookBean;
 import com.integrate.mingweidev.mvp.contract.CTest;
 import com.integrate.mingweidev.mvp.presenter.PFragmentTest;
+import com.integrate.mingweidev.utils.Constant;
+import com.integrate.mingweidev.utils.ImageUtils;
 import com.integrate.mingweidev.utils.LoadingHelper;
+import com.integrate.mingweidev.utils.LogUtils;
 import com.jph.takephoto.compress.CompressConfig;
 import com.jph.takephoto.model.CropOptions;
+
+import java.util.HashMap;
+import java.util.Map;
 
 import butterknife.BindView;
 import butterknife.ButterKnife;
@@ -67,8 +74,13 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
         btJjj.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
-//                mPresenter.pBook();
+                LogUtils.e(Constant.picpath);
+                LogUtils.e(ImageUtils.imageToBase64Str(Constant.picpath));
+                Map<String, String> bodys = new HashMap<String, String>();
+                bodys.clear();
+//                bodys.put("image","https://appbundle.holdsoft.cn/Screenshot_1547090720.png");
+                bodys.put("image",Constant.picpath);
+                mPresenter.ppicBook(bodys);
 
             }
         });
@@ -94,6 +106,11 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
     @Override
     public void Prosess(String string) {
         tv.setText(string);
+    }
+
+    @Override
+    public void vPicBookSuccess(PicBookBean bookBean) {
+        tv.setText(bookBean.getResult());
     }
 
     @Override
