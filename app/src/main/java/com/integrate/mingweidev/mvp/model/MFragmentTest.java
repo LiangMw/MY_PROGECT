@@ -30,10 +30,10 @@ public class MFragmentTest extends BaseModel {
 
         headerMaps.clear();
 //        headerMaps.put("User-Agent", Build.MODEL+"/"+Build.VERSION.RELEASE);
-        headerMaps.put("Authorization", "APPCODE " + "78ddd918b0fc4a83a5f9b1e20ca1e83a");
+//        headerMaps.put("Authorization", "APPCODE " + "78ddd918b0fc4a83a5f9b1e20ca1e83a");
         RxHttpUtils
                 .getSInstance()
-                .baseUrl("http://txtbookocr.market.alicloudapi.com/")
+//                .baseUrl("http://txtbookocr.market.alicloudapi.com/")
                 .cache(true)
                 .cachePath("cachePath", 1024 * 1024 * 100)
                 .sslSocketFactory()

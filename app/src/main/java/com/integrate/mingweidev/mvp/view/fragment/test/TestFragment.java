@@ -79,7 +79,7 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
                 Map<String, String> bodys = new HashMap<String, String>();
                 bodys.clear();
 //                bodys.put("image","https://appbundle.holdsoft.cn/Screenshot_1547090720.png");
-                bodys.put("image",Constant.picpath);
+                bodys.put("image",ImageUtils.imageToBase64Str(Constant.picpath));
                 mPresenter.ppicBook(bodys);
 
             }

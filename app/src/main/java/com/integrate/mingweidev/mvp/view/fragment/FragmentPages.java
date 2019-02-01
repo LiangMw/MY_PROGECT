@@ -6,6 +6,7 @@ import com.integrate.mingweidev.mvp.view.fragment.files.LocalFilesFragment;
 import com.integrate.mingweidev.mvp.view.fragment.music.NetMusicListFragment;
 import com.integrate.mingweidev.mvp.view.fragment.news.NewsMainFragment;
 import com.integrate.mingweidev.mvp.view.fragment.test.TestFragment;
+import com.integrate.mingweidev.mvp.view.fragment.textpicture.TextPicFragment;
 
 /**
  * fragment管理枚举类
@@ -16,6 +17,7 @@ public enum FragmentPages {
     FILE_SEARCH(1003, LocalFilesFragment.class),
     NEWS_LIST(1004, NewsMainFragment.class),
     SONGS_LIST(1005, NetMusicListFragment.class),
+    FUNCTION_TEXTPIC(1006, TextPicFragment.class),
     WINDCAR_TestFragment(1001,TestFragment.class);
 
     private Class<?> clazz;

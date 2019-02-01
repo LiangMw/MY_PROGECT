@@ -30,7 +30,7 @@ public class FunctionFragment extends BaseFragment {
     GridView gvView;
 
     private int[] icons = new int[]{R.mipmap.f_files, R.mipmap.f_music, R.drawable.f_photo};
-    private String[] names = new String[]{"文件", "音乐", "新闻"};
+    private String[] names = new String[]{"文字识别", "音乐", "新闻"};
     private FunctionAdapter adapter;
     private int CHOOSEFILE_CODE = 10001;
     private Handler mhandler = new Handler() {
@@ -85,10 +85,10 @@ public class FunctionFragment extends BaseFragment {
             public void onItemClick(AdapterView<?> adapterView, View view, int i, long l) {
                 switch (i) {
                     case 0:
-                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
+                        AppMethod.postShow((Activity) mContext, FragmentPages.FUNCTION_TEXTPIC);
                         break;
                     case 1:
-
+                        AppMethod.postShow((Activity) mContext, FragmentPages.WINDCAR_TestFragment);
                         break;
                     case 2:
                         AppMethod.postShow((Activity) mContext, FragmentPages.NEWS_LIST);
