@@ -30,7 +30,7 @@ public class ImageUtils {
             } catch (IOException e) {
                 e.printStackTrace();
             }
-            String format = imgFile.substring(imgFile.lastIndexOf("."));
+            String format = imgFile.substring(imgFile.lastIndexOf(".")+1);
             String head = "data:image/"+format+";base64,";
         // 加密
         return head+Base64.encodeToString(data, Base64.DEFAULT);

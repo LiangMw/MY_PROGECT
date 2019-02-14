@@ -18,8 +18,8 @@ import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.ImageUtils;
 import com.integrate.mingweidev.utils.LoadingHelper;
 import com.integrate.mingweidev.utils.LogUtils;
-import com.jph.takephoto.compress.CompressConfig;
-import com.jph.takephoto.model.CropOptions;
+import org.devio.takephoto.compress.CompressConfig;
+import org.devio.takephoto.model.CropOptions;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -110,7 +110,7 @@ public class TestFragment extends BaseFragment<PFragmentTest> implements CTest.I
 
     @Override
     public void vPicBookSuccess(PicBookBean bookBean) {
-        tv.setText(bookBean.getResult());
+        tv.setText(bookBean.getResult().getText());
     }
 
     @Override

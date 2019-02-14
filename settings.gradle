@@ -1,1 +1,1 @@
-include ':app', ':javatest', ':xbanner'
+include ':app', ':javatest', ':xbanner',':takephoto_library'

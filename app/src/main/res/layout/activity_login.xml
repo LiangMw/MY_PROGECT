@@ -51,7 +51,6 @@
 
             </android.support.design.widget.TextInputLayout>
 
-
             <com.integrate.mingweidev.widget.theme.ColorTextView
                 android:id="@+id/ctv_register"
                 android:layout_width="wrap_content"
