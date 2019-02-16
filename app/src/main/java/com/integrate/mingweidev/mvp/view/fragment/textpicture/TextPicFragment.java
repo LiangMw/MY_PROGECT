@@ -6,6 +6,9 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.support.annotation.Nullable;
 import android.text.TextUtils;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
 import android.widget.EditText;
 import android.widget.ImageView;
 
@@ -37,6 +40,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 import butterknife.BindView;
+import butterknife.ButterKnife;
 import butterknife.OnClick;
 import butterknife.Unbinder;
 
@@ -44,7 +48,7 @@ import butterknife.Unbinder;
  * Created by 梁明伟 on 2019/1/30.
  * Copyright © 2018年 CETC. All rights reserved.
  */
-public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeListener, TakePhoto.TakeResultListener,CResult<PicBookBean> {
+public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeListener, TakePhoto.TakeResultListener, CResult<PicBookBean> {
 
     @BindView(R.id.tv_select)
     ColorTextView tvSelect;
@@ -82,7 +86,7 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
      */
     @Override
     public void createPresenter() {
-        mPresenter = new PTextPic(getActivity(),this);
+        mPresenter = new PTextPic(getActivity(), this);
     }
 
     /**
@@ -97,7 +101,7 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
         cropOptions = new CropOptions.Builder().setAspectX(1).setAspectY(1).setWithOwnCrop(true).create();
         //设置压缩参数
         compressConfig = new CompressConfig.Builder().setMaxSize(50 * 1024).setMaxPixel(800).create();
-        takePhoto.onEnableCompress(compressConfig, false);//设置为需要压缩
+        takePhoto.onEnableCompress(compressConfig, true);//设置为需要压缩
 
     }
 
@@ -139,8 +143,8 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
     public void takeSuccess(TResult result) {
         String mIconPath = result.getImage().getOriginalPath();
         ToastUtils.show(mIconPath);
-        ImageLoadManage.getInstance().display(getActivity(),iv_pic, mIconPath);
-        Map<String,String> map = new HashMap<>();
+        ImageLoadManage.getInstance().display(getActivity(), iv_pic, mIconPath);
+        Map<String, String> map = new HashMap<>();
         map.put("image", ImageUtils.imageToBase64Str(mIconPath));
         mPresenter.getpictext(map);
     }
@@ -153,12 +157,6 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
     @Override
     public void takeCancel() {
 
-    }
-
-    @Override
-    public void onDestroyView() {
-        super.onDestroyView();
-        unbinder.unbind();
     }
 
     @OnClick(R.id.tv_select)
@@ -179,8 +177,9 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
                             //从相册中选取图片并裁剪
 //                                    takePhoto.onPickFromGalleryWithCrop(imageUri, cropOptions);
                             //从相册中选取不裁剪
-                            //takePhoto.onPickFromGallery();
-                            takePhoto.onPickMultiple(1);
+//                            takePhoto.onPickFromGallery();
+//                            takePhoto.onPickMultiple(1);
+                            takePhoto.onPickMultipleWithCrop(1,cropOptions);
                             break;
                         case 1:
                             dialog.dismiss();
@@ -200,6 +199,7 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
         getTakePhoto().onActivityResult(requestCode, resultCode, data);
         super.onActivityResult(requestCode, resultCode, data);
     }
+
     @Override
     public void onSaveInstanceState(Bundle outState) {
         getTakePhoto().onSaveInstanceState(outState);
@@ -208,10 +208,10 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
 
     @Override
     public void success(PicBookBean e) {
-        LogUtils.e("------------:"+e.getCode()+"---"+e.getMsg()+"----"+e.getResult().getText()+"");
-        if(e.getResult()!=null && !TextUtils.isEmpty(e.getResult().getText())) {
+        LogUtils.e("------------:" + e.getCode() + "---" + e.getMsg() + "----" + e.getResult().getText() + "");
+        if (e.getResult() != null && !TextUtils.isEmpty(e.getResult().getText())) {
             tv_result.setText(e.getResult().getText());
-        }else{
+        } else {
             tv_result.setText("未转换成功");
         }
     }
@@ -234,5 +234,19 @@ public class TextPicFragment extends BaseFragment<PTextPic> implements InvokeLis
     @Override
     public void neterror() {
 
+    }
+
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        // TODO: inflate a fragment view
+        View rootView = super.onCreateView(inflater, container, savedInstanceState);
+        unbinder = ButterKnife.bind(this, rootView);
+        return rootView;
+    }
+
+    @Override
+    public void onDestroyView() {
+        super.onDestroyView();
+        unbinder.unbind();
     }
 }

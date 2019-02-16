@@ -1,13 +1,14 @@
 package com.integrate.mingweidev.mvp.view.fragment.music;
 
 import android.os.Bundle;
+import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 
+import com.chad.library.adapter.base.BaseQuickAdapter;
 import com.integrate.mingweidev.R;
 import com.integrate.mingweidev.mvp.base.BaseFragment;
 import com.integrate.mingweidev.mvp.bean.BannerBean;
@@ -15,10 +16,8 @@ import com.integrate.mingweidev.mvp.bean.OnlineMusicList;
 import com.integrate.mingweidev.mvp.bean.SheetInfo;
 import com.integrate.mingweidev.mvp.contract.CMusic;
 import com.integrate.mingweidev.mvp.presenter.pmusic.PMusicImpl;
-import com.integrate.mingweidev.mvp.view.adapter.ad_music.MultipleItem;
-import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicListAdapter;
-import com.integrate.mingweidev.utils.LogUtils;
-import com.integrate.mingweidev.utils.ScreenUtils;
+import com.integrate.mingweidev.mvp.view.adapter.ad_music.MusicTypeListAdapter;
+import com.integrate.mingweidev.utils.Constant;
 import com.integrate.mingweidev.utils.ToastUtils;
 import com.integrate.mingweidev.utils.imageload.ImageLoadManage;
 import com.stx.xhb.xbanner.XBanner;

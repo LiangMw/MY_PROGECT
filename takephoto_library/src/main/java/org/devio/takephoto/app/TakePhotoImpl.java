@@ -8,31 +8,33 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.darsh.multipleimageselect.helpers.Constants;
 import com.darsh.multipleimageselect.models.Image;
+import com.soundcloud.android.crop.Crop;
+
+import org.devio.takephoto.compress.CompressConfig;
 import org.devio.takephoto.compress.CompressImage;
 import org.devio.takephoto.compress.CompressImageImpl;
+import org.devio.takephoto.model.CropOptions;
 import org.devio.takephoto.model.MultipleCrop;
+import org.devio.takephoto.model.TContextWrap;
 import org.devio.takephoto.model.TException;
 import org.devio.takephoto.model.TExceptionType;
 import org.devio.takephoto.model.TImage;
 import org.devio.takephoto.model.TIntentWap;
-import org.devio.takephoto.permission.PermissionManager;
-import org.devio.takephoto.uitl.TUriParse;
-import org.devio.takephoto.compress.CompressConfig;
-import org.devio.takephoto.model.CropOptions;
-import org.devio.takephoto.model.TContextWrap;
 import org.devio.takephoto.model.TResult;
 import org.devio.takephoto.model.TakePhotoOptions;
+import org.devio.takephoto.permission.PermissionManager;
 import org.devio.takephoto.uitl.ImageRotateUtil;
 import org.devio.takephoto.uitl.IntentUtils;
 import org.devio.takephoto.uitl.TConstant;
 import org.devio.takephoto.uitl.TFileUtils;
 import org.devio.takephoto.uitl.TImageFiles;
+import org.devio.takephoto.uitl.TUriParse;
 import org.devio.takephoto.uitl.TUtils;
-import com.soundcloud.android.crop.Crop;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,8 +89,10 @@ public class TakePhotoImpl implements TakePhoto {
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
+        Log.e("--------------tag:",savedInstanceState.toString());
         if (savedInstanceState != null) {
             cropOptions = (CropOptions) savedInstanceState.getSerializable("cropOptions");
+            Log.e("--------------tag:",savedInstanceState.toString()+cropOptions.getAspectX());
             takePhotoOptions = (TakePhotoOptions) savedInstanceState.getSerializable("takePhotoOptions");
             showCompressDialog = savedInstanceState.getBoolean("showCompressDialog");
             outPutUri = savedInstanceState.getParcelable("outPutUri");
@@ -99,6 +103,7 @@ public class TakePhotoImpl implements TakePhoto {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+        Log.e("--------------tag:",cropOptions.getAspectX()+"");
         outState.putSerializable("cropOptions", cropOptions);
         outState.putSerializable("takePhotoOptions", takePhotoOptions);
         outState.putBoolean("showCompressDialog", showCompressDialog);
