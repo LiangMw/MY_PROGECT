@@ -166,7 +166,7 @@ public class FileUtils {
                         return true;
                     }
                     //获取txt文件
-                    else if(pathname.getName().endsWith(".mp3")){
+                    else if(pathname.getName().endsWith(".png")){
                         txtFiles.add(pathname);
                         return false;
                     }

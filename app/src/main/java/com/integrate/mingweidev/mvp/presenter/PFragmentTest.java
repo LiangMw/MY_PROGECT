@@ -4,9 +4,13 @@ import android.content.Context;
 
 import com.allen.library.download.DownloadObserver;
 import com.integrate.mingweidev.mvp.base.BasePresenter;
+import com.integrate.mingweidev.mvp.bean.PicBookBean;
 import com.integrate.mingweidev.mvp.contract.CBook;
 import com.integrate.mingweidev.mvp.contract.CTest;
 import com.integrate.mingweidev.mvp.model.MFragmentTest;
+import com.integrate.mingweidev.utils.rxhelper.RxObservable;
+
+import java.util.Map;
 
 /**
  * Created by 梁明伟 on 2018/11/2.
@@ -47,4 +51,23 @@ public class PFragmentTest extends BasePresenter<CTest.IVBook,MFragmentTest> imp
         });
 
     }
+
+    @Override
+    public void ppicBook(Map<String,String> image) {
+        mModel.getPicContent(new RxObservable<PicBookBean>() {
+
+            @Override
+            public void onSuccess(PicBookBean picBookBean) {
+                mView.vPicBookSuccess(picBookBean);
+            }
+
+            @Override
+            public void onFail(String reason) {
+
+            }
+        },image);
+
+    }
+
+
 }

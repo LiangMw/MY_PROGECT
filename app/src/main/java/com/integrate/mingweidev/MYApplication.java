@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.pm.PackageInfo;
 import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 
 import com.allen.library.RxHttpUtils;
 import com.allen.library.config.OkHttpConfig;
@@ -37,8 +38,10 @@ public class MYApplication extends Application {
     private static ArrayList<Activity> allActivity = new ArrayList<>();
     private static MYApplication app;
     private Map<String, String> baseparam = new HashMap<>();
+    private Map<String, String> headerMaps = new HashMap<>();
     private String CachePath="";
     private int a=0;
+
 
     public static Context getAppContext() {
         return app;
@@ -109,6 +112,8 @@ public class MYApplication extends Application {
 
     private void initRxHttpUtils() {
         baseparam.put("p", (a++)+"");
+//        headerMaps.clear();
+        headerMaps.put("User-Agent", Build.MODEL+"/"+Build.VERSION.RELEASE);
         /**
          * 初始化配置
          */
@@ -125,7 +130,7 @@ public class MYApplication extends Application {
                 //不设置的话，默认不对cookie做处理
                 .setCookieType(new SPCookieStore(this))
                 //可以添加自己的拦截器(比如使用自己熟悉三方的缓存库等等)
-                .setAddInterceptor(new BasicParamsInterceptor.Builder().addQueryParamsMap(baseparam).build())
+                .setAddInterceptor(new BasicParamsInterceptor.Builder().addQueryParamsMap(baseparam).addHeaderParamsMap(headerMaps).build())
 //                .setAddInterceptor(new TokenInterceptord())
                 //全局ssl证书认证
                 //1、信任所有证书,不安全有风险（默认信任所有证书）
@@ -135,11 +140,11 @@ public class MYApplication extends Application {
                 //3、使用bks证书和密码管理客户端证书（双向认证），使用预埋证书，校验服务端证书（自签名证书）
                 //.setSslSocketFactory(bksInputStream,"123456",cerInputStream)
                 //全局超时配置
-                .setReadTimeout(10)
+                .setReadTimeout(100)
                 //全局超时配置
-                .setWriteTimeout(10)
+                .setWriteTimeout(100)
                 //全局超时配置
-                .setConnectTimeout(10)
+                .setConnectTimeout(100)
                 //全局是否打开请求log日志
                 .setDebug(true)
                 .build();

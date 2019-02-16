@@ -7,6 +7,8 @@ import com.integrate.mingweidev.mvp.contract.CBook;
 import com.integrate.mingweidev.mvp.model.MBookImpl;
 import com.integrate.mingweidev.mvp.view.activity.BookActivity;
 
+import java.util.Map;
+
 
 /**
  * Created by Liang_Lu on 2017/12/21.
@@ -59,4 +61,10 @@ public class PBookImpl extends BasePresenter<CBook.IVBook, MBookImpl> implements
 //            }
 //        });
     }
+
+    @Override
+    public void ppicBook(Map<String,String> image) {
+
+    }
+
 }

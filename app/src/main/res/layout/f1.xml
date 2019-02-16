@@ -17,12 +17,18 @@
         android:layout_toRightOf="@+id/bt_jjj"
         android:text="取消"/>
 
-    <TextView
-        android:id="@+id/tv"
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_marginTop="100dp"
-        android:layout_height="match_parent"
-        android:text="骄傲安静安静安静"/>
+        android:layout_marginTop="50dp"
+        android:layout_height="match_parent">
+        <TextView
+            android:id="@+id/tv"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="骄傲安静安静安静"/>
+    </ScrollView>
+
+
 
     <ImageView
         android:id="@+id/iv_icon"

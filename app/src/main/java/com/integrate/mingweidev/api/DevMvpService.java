@@ -6,13 +6,16 @@ import com.integrate.mingweidev.mvp.bean.BannerBean;
 import com.integrate.mingweidev.mvp.bean.BookBean;
 import com.integrate.mingweidev.mvp.bean.NewsListBean;
 import com.integrate.mingweidev.mvp.bean.OnlineMusicList;
+import com.integrate.mingweidev.mvp.bean.PicBookBean;
 import com.integrate.mingweidev.mvp.bean.TokenBean;
 import com.integrate.mingweidev.mvp.bean.UserInfoBean;
 
 import java.util.Map;
 
 import io.reactivex.Observable;
+import retrofit2.http.Body;
 import retrofit2.http.GET;
+import retrofit2.http.POST;
 import retrofit2.http.Path;
 import retrofit2.http.Query;
 import retrofit2.http.QueryMap;
@@ -49,5 +52,9 @@ public interface DevMvpService {
     //获取歌曲类型列表
     @GET("restserver/ting/")
     Observable<OnlineMusicList> songList(@QueryMap Map<String, String> map);
+
+    //解析图片电子书
+    @POST("fc/pictext/")
+    Observable<PicBookBean> picbook(@Body Map<String,String> image);
 
 }

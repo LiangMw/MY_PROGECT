@@ -4,6 +4,7 @@ package com.integrate.mingweidev.mvp.contract;
 import com.integrate.mingweidev.mvp.base.IBasePresenter;
 import com.integrate.mingweidev.mvp.base.IBaseView;
 import com.integrate.mingweidev.mvp.bean.BookBean;
+import com.integrate.mingweidev.mvp.bean.PicBookBean;
 
 /**
  * Created by Liang_Lu on 2017/12/22.
@@ -24,6 +25,8 @@ public interface CTest {
         void vBookError(String reason);
 
         void Prosess(String string);
+
+        void vPicBookSuccess(PicBookBean bookBean);
 
     }
 }
